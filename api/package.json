@@ -1,0 +1,25 @@
+{
+  "name": "FinanceTrackerAPI",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "JesseDavda <jessedavda@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "source .env.bash && nodemon --exec babel-node src/server.js"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/runtime": "^7.5.5",
+    "axios": "^0.19.0",
+    "data-store": "^3.1.0",
+    "express": "^4.17.1",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5"
+  }
+}
