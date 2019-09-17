@@ -6,25 +6,15 @@ import getBalance from '../lib/getAccountBalances';
 
 const router = express.Router();
 
-async function asyncForEach(array, callback) {
-    for (let index = 0; index < array.length; index++) {
-        await callback(array[index]);
-    }
-}
-
 async function insertBalances(accounts) {
     let modifiedAccounts = accounts;
 
-    asyncForEach(modifiedAccounts, async (account) => {
-        try {
-            account.balance = await getBalance(account.account_id)
-                                        .then(response => response)
-        } catch(e) {
-            console.log(e);
+    return modifiedAccounts.map((account => {
+        return {
+            ...account,
+            balance: getBalance(account.account_id)
         }
-    });
-
-    return modifiedAccounts;
+    }));
 } 
 
 router.get('/loadAccounts', async (req, res) => {
@@ -39,11 +29,11 @@ router.get('/loadAccounts', async (req, res) => {
     try {
         accounts = await axios.get('https://api.truelayer.com/data/v1/accounts', config)
             .then(response => response.data.results);
+
+        res.status(200).json(accounts).end();
     } catch(e) {
         console.log(e);
     }
-
-    console.log(insertBalances(accounts));
 });
 
 export default router;
