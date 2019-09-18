@@ -1,10 +1,11 @@
 const styles = {
     container: {
         display: 'flex',
+        flexWrap: 'wrap',
         justifyContent: 'center'
     },
     accountsContainer: {
-        width: 'fit-content',
+        width: '67%',
         height: 'fit-content'
     }
 }

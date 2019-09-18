@@ -10,18 +10,45 @@ class BalanceDisplay extends Component {
 
         this.state = {
             balanceReady: false,
-            accountsArray: this.props.accounts
+            accountsRecieved: false,
+            accountsArray: this.props.accounts,
+            balance: 0
         }
     }
 
-    componentDidMount() {
-        console.log("Accounts: ", this.props.accounts);
+    static getDerivedStateFromProps(props, state) {
+        if(props.accounts !== state.accountsArray) {
+            return {
+                accountsArray: props.accounts,
+                accountsRecieved: true
+            }
+        }
     }
 
-    displayBalance() {
-        return(
-            <h1>Balance</h1>
-        )
+    componentDidUpdate() {
+        this.setBalance()
+        console.log(typeof this.state.balance)
+    }
+
+    setBalance() {  
+        console.log(this.state.accountsArray)
+        if(this.state.accountsRecieved) {
+            this.setState({
+                balanceReady: true,
+                accountsRecieved: false,
+                balance: this.calcBalance() 
+            });
+        }
+    }
+
+    calcBalance() {
+        let total = 0;
+
+        this.state.accountsArray.forEach(account => {
+            total += account.balance.current
+        });
+
+        return total;
     }
 
     render() {
@@ -29,7 +56,7 @@ class BalanceDisplay extends Component {
             <div style={styles.displayContainer}>
                 <p style={styles.balanceLabel}>Combined account balance:</p>
                 <div style={styles.balanceContainer}>
-                    {this.state.balanceReady ? this.displayBalance() : <LoadingAnimation />}
+                    {this.state.balanceReady ? <h1 style={styles.balanceNumber}>£{(this.state.balance).toFixed(2)}</h1> : <LoadingAnimation />}
                 </div>
             </div>
         )

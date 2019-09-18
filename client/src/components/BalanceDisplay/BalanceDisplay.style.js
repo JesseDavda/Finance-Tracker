@@ -1,6 +1,6 @@
 const styles = {
     displayContainer: {
-        width: '350px',
+        width: '30%',
         height: '170px',
         backgroundColor: '#FFFFFF',
         boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
@@ -18,6 +18,9 @@ const styles = {
         height: '90%',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    balanceNumber: {
+        fontSize: '60px'
     }
 }
 

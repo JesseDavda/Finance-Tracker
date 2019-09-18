@@ -1,6 +1,6 @@
 const styles = {
     container: {
-        width: '600px',
+        width: '730px',
         height: '150px',
         display: 'flex',
         alignItems: 'center',
@@ -9,7 +9,8 @@ const styles = {
         borderRadius: '5px',
         marginLeft: '50px',
         marginRight: '50px',
-        marginBottom: '50px'
+        marginBottom: '50px',
+        position: 'relative'
     },
     imageContainer: {
         width: '30%',
@@ -47,6 +48,15 @@ const styles = {
     },
     accountDetail: {
         margin: '0px'
+    },
+    balanceContainer: {
+        width: '200px',
+        position: 'absolute',
+        right: '0px',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 }
 

@@ -31,6 +31,10 @@ class Account extends Component {
                     <h2 style={styles.accountName}>{this.props.accountName}</h2>
                     { this.showAccountDetails() }
                 </div>
+                <div style={styles.balanceContainer}>
+                    <h1>£</h1>
+                    <h1>{this.props.balance.toFixed(2)}</h1>
+                </div>
             </div>
         )
     }

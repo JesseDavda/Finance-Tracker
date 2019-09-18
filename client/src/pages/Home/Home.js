@@ -21,7 +21,7 @@ class Home extends Component {
         axios.get('http://localhost:3001/loadAccounts')
             .then(response => {
                 this.setState({accounts: response.data});
-                this.combineBalance();
+                console.log(response);
             }).catch(e => {
                 console.log(e);
             })
@@ -42,11 +42,14 @@ class Home extends Component {
                                 accountName={account.display_name}
                                 sortCode={account.account_number.sort_code}
                                 accountNumber={account.account_number.number}
+                                balance={account.balance.current}
                             />
                         )
                     })}
                 </div>
-                <TransactionCalendarHeatMap />
+                <TransactionCalendarHeatMap
+                    accountId={this.state.accounts}
+                />
             </div>
         )
     }

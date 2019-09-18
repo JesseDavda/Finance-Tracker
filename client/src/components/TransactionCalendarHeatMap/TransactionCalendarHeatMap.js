@@ -12,6 +12,8 @@ class TransactionCalendarHeatMap extends Component {
         super(props);
 
         this.state = {
+            update: true,
+            accountId: [],
             transactionData: [],
             startDate: moment().subtract(3, 'months'),
             endDate: moment()
@@ -19,29 +21,34 @@ class TransactionCalendarHeatMap extends Component {
     }
 
 
-    shiftDate(date, numDays) {
-        const newDate = new Date(date);
-        newDate.setDate(newDate.getDate() + numDays);
-        return newDate;
+    static getDerivedStateFromProps(props, state) {
+        if(props.accoundId !== state.accountId) {
+            return {
+                accountId: props.accountId
+            }
+        }
     }
 
-    componentDidMount() {
-        axios.get(`http://localhost:3001/transactions?accountId=${this.props.accountId}`)
-            .then(response => {
-                this.setState({transactionData: response});
-            }).catch(e => {
-                console.log(e);
-            });
+    componentDidUpdate() {
+        if(this.state.update === true) {
+            axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId[0].account_id}`)
+                .then(response => {
+                    console.log("The returned response: ", response.data);
+                    this.setState({transactionData: response, update: false});
+                }).catch(e => {
+                    console.log(e);
+                });
+        }
     }
     
     render() {
         return(
-            <div>
-                <CalendarHeatMap 
+            <div style={styles.heatMapContainer}>
+                <CalendarHeatMap
                     startDate={this.state.startDate}
                     endDate={this.state.endDate}
-                    values={this.state.transactionData}
-
+                    values={[]}
+                    showWeekdayLabels={false}
                 />
             </div>
         )
