@@ -12,7 +12,8 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            accounts: []
+            accounts: [],
+            heatmap_account_id: ""
         }
 
     }
@@ -20,8 +21,7 @@ class Home extends Component {
     componentDidMount() {
         axios.get('http://localhost:3001/loadAccounts')
             .then(response => {
-                this.setState({accounts: response.data});
-                console.log(response);
+                this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
             }).catch(e => {
                 console.log(e);
             })
@@ -48,7 +48,7 @@ class Home extends Component {
                     })}
                 </div>
                 <TransactionCalendarHeatMap
-                    accountId={this.state.accounts}
+                    accountId={this.state.heatmap_account_id}
                 />
             </div>
         )

@@ -5,7 +5,8 @@
   "author": "JesseDavda <jessedavda@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "source .env.bash && nodemon --exec babel-node src/server.js"
+    "start": "source .env.bash && nodemon --exec babel-node src/server.js",
+    "startDev": "source .env.bash && node --inspect --exec babel-node src/server.js"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.5.5",
@@ -15,6 +16,7 @@
     "cors": "^2.8.5",
     "data-store": "^3.1.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.15",
     "querystring": "^0.2.0"
   },
   "devDependencies": {

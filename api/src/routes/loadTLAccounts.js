@@ -18,6 +18,13 @@ async function getBalances(accounts) {
                             balance: response.data.results[0],
                             ...account
                         }
+                    }).catch(e => {
+                        return {
+                            balance: {
+                                current: "Balance not found",
+                            },
+                            ...account
+                        }
                     });
     }))
 }

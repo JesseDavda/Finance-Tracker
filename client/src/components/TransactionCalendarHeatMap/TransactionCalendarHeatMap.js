@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CalendarHeatMap from 'react-calendar-heatmap';
 import axios from 'axios';
 import moment from 'moment';
+import _ from 'lodash';
 
 import styles from './TransactionCalendarHeatMap.style';
 import 'react-calendar-heatmap/dist/styles.css';
@@ -12,29 +13,34 @@ class TransactionCalendarHeatMap extends Component {
         super(props);
 
         this.state = {
-            update: true,
-            accountId: [],
+            accountIdNeeded: true,
+            accountId: "",
             transactionData: [],
             startDate: moment().subtract(3, 'months'),
             endDate: moment()
         }
     }
 
-
     static getDerivedStateFromProps(props, state) {
-        if(props.accoundId !== state.accountId) {
+        if(props.accountId !== state.accountId) {
+            console.log('requested');
+            console.log(props.accountId);
             return {
                 accountId: props.accountId
             }
+        } else {
+            return state
         }
     }
 
     componentDidUpdate() {
-        if(this.state.update === true) {
-            axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId[0].account_id}`)
+        console.log('componentDidUpdate called', this.state.accountIdNeeded)
+        if(this.state.accountIdNeeded) {
+            console.log('transactions requested');
+            axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId}`)
                 .then(response => {
-                    console.log("The returned response: ", response.data);
-                    this.setState({transactionData: response, update: false});
+                    console.log(response)
+                    this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false});
                 }).catch(e => {
                     console.log(e);
                 });
@@ -47,8 +53,17 @@ class TransactionCalendarHeatMap extends Component {
                 <CalendarHeatMap
                     startDate={this.state.startDate}
                     endDate={this.state.endDate}
-                    values={[]}
-                    showWeekdayLabels={false}
+                    values={this.state.transactionData}
+                    onClick={value => alert(`Clicked on value with count: ${value.count}`)}
+                    classForValue={(value) => {
+                        if(!value) {
+                            return 'color-empty'
+                        } else if(value.count >= 1 && value.count <= 4) {
+                            return `color-scale-${value.count}`
+                        } else {
+                            return 'color-scale-4'
+                        }
+                    }}
                 />
             </div>
         )

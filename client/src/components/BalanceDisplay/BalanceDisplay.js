@@ -22,16 +22,16 @@ class BalanceDisplay extends Component {
                 accountsArray: props.accounts,
                 accountsRecieved: true
             }
+        } else {
+            return state
         }
     }
 
     componentDidUpdate() {
         this.setBalance()
-        console.log(typeof this.state.balance)
     }
 
     setBalance() {  
-        console.log(this.state.accountsArray)
         if(this.state.accountsRecieved) {
             this.setState({
                 balanceReady: true,
