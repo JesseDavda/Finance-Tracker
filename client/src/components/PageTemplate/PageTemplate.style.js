@@ -7,7 +7,7 @@ const styles = {
         position: 'relative'
     },
     pageContentContainer: {
-        width: '1000px',
+        width: '1100px',
         margin: '0 auto',
         padding: '0px',
         paddingTop: '50px'

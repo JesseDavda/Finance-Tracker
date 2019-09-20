@@ -18,6 +18,10 @@ code {
 .react-calendar-heatmap .color-scale-3 { fill: #44a340; }
 .react-calendar-heatmap .color-scale-4 { fill: #1e6823; }
 
+.color-square:hover {
+    cursor: pointer;
+}
+
 body .loadingAnimationContainer {
   width: 112px;
   height: 112px;

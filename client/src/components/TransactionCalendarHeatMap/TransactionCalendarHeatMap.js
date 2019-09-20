@@ -7,6 +7,8 @@ import _ from 'lodash';
 import styles from './TransactionCalendarHeatMap.style';
 import 'react-calendar-heatmap/dist/styles.css';
 
+import TransactionViewWindow from '../TransactionViewWindow';
+import LoadingAnimation from '../LoadingAnimation';
 
 class TransactionCalendarHeatMap extends Component {
     constructor(props) {
@@ -17,7 +19,8 @@ class TransactionCalendarHeatMap extends Component {
             accountId: "",
             transactionData: [],
             startDate: moment().subtract(3, 'months'),
-            endDate: moment()
+            endDate: moment(),
+            transactionViewData: []
         }
     }
 
@@ -46,27 +49,55 @@ class TransactionCalendarHeatMap extends Component {
                 });
         }
     }
+
+    squareClick(value) {
+        this.setState({transactionViewData: value.transactions});
+    }
     
     render() {
-        return(
-            <div style={styles.heatMapContainer}>
-                <CalendarHeatMap
-                    startDate={this.state.startDate}
-                    endDate={this.state.endDate}
-                    values={this.state.transactionData}
-                    onClick={value => alert(`Clicked on value with count: ${value.count}`)}
-                    classForValue={(value) => {
-                        if(!value) {
-                            return 'color-empty'
-                        } else if(value.count >= 1 && value.count <= 4) {
-                            return `color-scale-${value.count}`
-                        } else {
-                            return 'color-scale-4'
-                        }
-                    }}
-                />
-            </div>
-        )
+        if(_.isEmpty(this.state.transactionData)) {
+            return(
+                <div style={styles.heatMapTransactionViewContainer}>
+                    <div style={styles.heatMapContainerLoading}>
+                        <LoadingAnimation />
+                    </div>
+                    <div style={styles.transactionViewContainer}>
+                        <TransactionViewWindow
+                            data={this.state.transactionViewData}
+                        />
+                    </div>
+                </div>
+            )
+        } else {
+            return(
+                <div style={styles.heatMapTransactionViewContainer}>
+                    <div style={styles.heatMapContainer}>
+                        <CalendarHeatMap
+                            startDate={this.state.startDate}
+                            endDate={this.state.endDate}
+                            values={this.state.transactionData}
+                            showWeekdayLabels={true}
+                            horizontal={false}
+                            classForValue={(value) => {
+                                if(!value) {
+                                    return 'color-empty'
+                                } else if(value.count >= 1 && value.count <= 4) {
+                                    return `color-square color-scale-${value.count}`
+                                } else {
+                                    return 'color-square color-scale-4'
+                                }
+                            }}
+                            onClick={value => this.squareClick(value)}
+                        />
+                    </div>
+                    <div style={styles.transactionViewContainer}>
+                        <TransactionViewWindow
+                            data={this.state.transactionViewData}
+                        />
+                    </div>
+                </div>
+            )
+        }
     }
 }
 

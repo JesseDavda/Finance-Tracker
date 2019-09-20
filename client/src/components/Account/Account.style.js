@@ -7,10 +7,8 @@ const styles = {
         backgroundColor: '#fff',
         boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
         borderRadius: '5px',
-        marginLeft: '50px',
-        marginRight: '50px',
-        marginBottom: '50px',
-        position: 'relative'
+        position: 'relative',
+        marginBottom: '30px'
     },
     imageContainer: {
         width: '30%',

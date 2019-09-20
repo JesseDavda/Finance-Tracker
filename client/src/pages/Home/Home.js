@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 
 import Account from '../../components/Account';
 import TransactionCalendarHeatMap from '../../components/TransactionCalendarHeatMap';
 import BalanceDisplay from '../../components/BalanceDisplay';
 import PageTemplate from '../../components/PageTemplate';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 import styles from './Home.style';
 class Home extends Component {
@@ -27,12 +29,15 @@ class Home extends Component {
             })
     }
 
-    pageCompile() {
-        return(
-            <div style={styles.container}>
-                <BalanceDisplay
-                    accounts={this.state.accounts}
-                />
+    renderAccounts() {
+        if(_.isEmpty(this.state.accounts)) {
+            return(
+                <div style={styles.accountsLoadingContainer}>
+                    <LoadingAnimation />
+                </div>
+            )
+        } else {
+            return(
                 <div style={styles.accountsContainer}>
                     {this.state.accounts.map(account => {
                         return(
@@ -47,6 +52,17 @@ class Home extends Component {
                         )
                     })}
                 </div>
+            )
+        }
+    }
+
+    pageCompile() {
+        return(
+            <div style={styles.container}>
+                <BalanceDisplay
+                    accounts={this.state.accounts}
+                />
+                {this.renderAccounts()}
                 <TransactionCalendarHeatMap
                     accountId={this.state.heatmap_account_id}
                 />
