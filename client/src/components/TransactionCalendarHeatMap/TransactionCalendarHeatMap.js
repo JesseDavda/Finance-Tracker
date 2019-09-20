@@ -37,9 +37,7 @@ class TransactionCalendarHeatMap extends Component {
     }
 
     componentDidUpdate() {
-        console.log('componentDidUpdate called', this.state.accountIdNeeded)
         if(this.state.accountIdNeeded) {
-            console.log('transactions requested');
             axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId}`)
                 .then(response => {
                     console.log(response)
@@ -87,7 +85,7 @@ class TransactionCalendarHeatMap extends Component {
                                     return 'color-square color-scale-4'
                                 }
                             }}
-                            onClick={value => this.squareClick(value)}
+                            onClick={value => { if(!_.isEmpty(value)) this.squareClick(value) }} 
                         />
                     </div>
                     <div style={styles.transactionViewContainer}>

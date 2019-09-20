@@ -7,6 +7,7 @@ import TransactionCalendarHeatMap from '../../components/TransactionCalendarHeat
 import BalanceDisplay from '../../components/BalanceDisplay';
 import PageTemplate from '../../components/PageTemplate';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import SectionTitle from '../../components/SectionTitle';
 
 import styles from './Home.style';
 class Home extends Component {
@@ -59,12 +60,21 @@ class Home extends Component {
     pageCompile() {
         return(
             <div style={styles.container}>
+                <SectionTitle 
+                    title={"Accounts & Balance"}
+                />
                 <BalanceDisplay
                     accounts={this.state.accounts}
                 />
                 {this.renderAccounts()}
+                <SectionTitle 
+                    title={"Transactions"}
+                />
                 <TransactionCalendarHeatMap
                     accountId={this.state.heatmap_account_id}
+                />
+                <SectionTitle 
+                    title={"Direct Debits"}
                 />
             </div>
         )

@@ -12,12 +12,22 @@ class TransactionViewWindow extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        console.log(state);
-        console.log(props);
+
         if(props.data !== state.transactions) {
             return {
                 transactions: props.data
             }
+        }
+    }
+
+    renderLabel(transaction) {
+        if(transaction.merchant_name !== undefined) {
+            return transaction.merchant_name + " (" + transaction.transaction_type + ") - " + transaction.timestamp.substring(11, 19);
+        } else if(transaction.description.substring(0, 3) === "pot") {
+            if((Math.abs(transaction.amount) < 1)) return "PURCHASE ROUND UP SENT TO POT - " + transaction.timestamp.substring(11, 19);
+            else return (transaction.amount < 0 ? "MONEY SENT TO SAVINGS POT" : "MONEY MOVED FROM SAVINGS POT") + " - " + transaction.timestamp.substring(11, 19);
+        } else {
+            return transaction.description.toUpperCase() + " (" + transaction.transaction_type + ") - " + transaction.timestamp.substring(11, 19);
         }
     }
 
@@ -31,11 +41,14 @@ class TransactionViewWindow extends Component {
         } else {
             return(
                 <div style={styles.transactionViewContainer}>
-                    {this.state.transactions.map(transaction => {
+                    {this.state.transactions.slice(0).reverse().map(transaction => {
                         return(
                             <div style={styles.transactionContainer}>
-                                <h4 style={styles.merchantName}>{transaction.merchant_name !== undefined ? transaction.merchant_name : (transaction.amount * -1) < 1 ? "ROUND UP" : "SAVINGS"}</h4>
-                                {transaction.amount < 0 ? <h2 style={styles.amountRed}>£{(transaction.amount * -1).toFixed(2)}</h2> : <h2 style={styles.amountGreen}>£{(transaction.amount).toFixed(2)}</h2> }
+                                <div style={styles.transactionLabel}>
+                                    <h4 style={styles.merchantName}>{this.renderLabel(transaction)}</h4>
+                                    <p style={styles.categories}>{_.isEmpty(transaction.transaction_classification) ? "" : transaction.transaction_classification.join(', ').toUpperCase()}</p>
+                                </div>
+                                {transaction.amount < 0 ? <h2 style={styles.amountRed}>- £{(transaction.amount * -1).toFixed(2)}</h2> : <h2 style={styles.amountGreen}>+ £{(transaction.amount).toFixed(2)}</h2> }
                             </div>
                         )
                     })}
