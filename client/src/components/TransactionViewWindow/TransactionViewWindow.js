@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import _ from 'lodash';
 
 import styles from './TransactionViewWindow.style';
@@ -12,7 +13,6 @@ class TransactionViewWindow extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-
         if(props.data !== state.transactions) {
             return {
                 transactions: props.data
@@ -41,6 +41,7 @@ class TransactionViewWindow extends Component {
         } else {
             return(
                 <div style={styles.transactionViewContainer}>
+                    <h3 style={styles.transactionDate}>{moment(this.state.transactions[0].timestamp.substring(0, 10)).format("dddd, Do MMMM YYYY")}</h3>
                     {this.state.transactions.slice(0).reverse().map(transaction => {
                         return(
                             <div style={styles.transactionContainer}>

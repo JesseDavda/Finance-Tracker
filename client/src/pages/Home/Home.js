@@ -8,6 +8,7 @@ import BalanceDisplay from '../../components/BalanceDisplay';
 import PageTemplate from '../../components/PageTemplate';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import SectionTitle from '../../components/SectionTitle';
+import DailySpendChart from '../../components/DailySpendChart';
 
 import styles from './Home.style';
 class Home extends Component {
@@ -73,8 +74,11 @@ class Home extends Component {
                 <TransactionCalendarHeatMap
                     accountId={this.state.heatmap_account_id}
                 />
-                <SectionTitle 
-                    title={"Direct Debits"}
+                <SectionTitle
+                    title={"Average Daily Spend"}
+                />
+                <DailySpendChart 
+                    accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
                 />
             </div>
         )

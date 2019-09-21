@@ -26,8 +26,6 @@ class TransactionCalendarHeatMap extends Component {
 
     static getDerivedStateFromProps(props, state) {
         if(props.accountId !== state.accountId) {
-            console.log('requested');
-            console.log(props.accountId);
             return {
                 accountId: props.accountId
             }
@@ -36,15 +34,19 @@ class TransactionCalendarHeatMap extends Component {
         }
     }
 
-    componentDidUpdate() {
-        if(this.state.accountIdNeeded) {
-            axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId}`)
+    getTransactionData() {
+        axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId}`)
                 .then(response => {
                     console.log(response)
                     this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false});
                 }).catch(e => {
                     console.log(e);
                 });
+    }
+
+    componentDidUpdate() {
+        if(this.state.accountIdNeeded) {
+           this.getTransactionData()
         }
     }
 

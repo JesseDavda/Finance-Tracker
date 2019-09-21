@@ -12,6 +12,7 @@ import refreshTLToken from './routes/refreshTLToken';
 import loadTLAccounts from './routes/loadTLAccounts';
 import getAccountBalance from './routes/getAccountBalance';
 import getTransactions from './routes/getTransactions';
+import getAverageDailySpend from './routes/getAverageDailySpend';
 
 app.use(monzoAccounts);
 app.use(monzoAuth);
@@ -20,6 +21,7 @@ app.use(refreshTLToken);
 app.use(loadTLAccounts);
 app.use(getAccountBalance);
 app.use(getTransactions);
+app.use(getAverageDailySpend);
 
 const PORT = 3001 || process.env.PORT;
 app.listen(PORT, () => {
