@@ -10,7 +10,10 @@ const styles = {
         width: '1100px',
         margin: '0 auto',
         padding: '0px',
-        paddingTop: '50px'
+        paddingTop: '50px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 }
 

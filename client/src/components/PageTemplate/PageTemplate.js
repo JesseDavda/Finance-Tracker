@@ -5,14 +5,26 @@ import NavBar from '../NavBar';
 
 class PageTemplate extends Component {
     render() {
-        return(
-           <div style={styles.pageContainer}>
-                <NavBar />
-                <div style={styles.pageContentContainer}>
-                    {this.props.children}
+        if(this.props.navigation) {
+            return(
+                <div style={styles.pageContainer}>
+                        <NavBar 
+                            loginButton={this.props.loginButton}
+                        />
+                        <div style={styles.pageContentContainer}>
+                            {this.props.children}
+                        </div>
                 </div>
-           </div>
-       ) 
+            )
+        } else {
+            return(
+                <div style={styles.pageContainer}>
+                        <div style={styles.pageContentContainer}>
+                            {this.props.children}
+                        </div>
+                </div>
+            )
+        }
     }
 }
 

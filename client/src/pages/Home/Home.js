@@ -80,13 +80,18 @@ class Home extends Component {
                 <DailySpendChart 
                     accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
                 />
+                <SectionTitle
+                    title={"Average Time Of Transactions"}
+                />
             </div>
         )
     }
 
     render() {
         return(
-            <PageTemplate>
+            <PageTemplate
+                navigation={true}
+            >
                 {this.pageCompile()}
             </PageTemplate>
         )
