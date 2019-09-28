@@ -49,7 +49,9 @@ class TransactionViewWindow extends Component {
                                     <h4 style={styles.merchantName}>{this.renderLabel(transaction)}</h4>
                                     <p style={styles.categories}>{_.isEmpty(transaction.transaction_classification) ? "" : transaction.transaction_classification.join(', ').toUpperCase()}</p>
                                 </div>
-                                {transaction.amount < 0 ? <h2 style={styles.amountRed}>- £{(transaction.amount * -1).toFixed(2)}</h2> : <h2 style={styles.amountGreen}>+ £{(transaction.amount).toFixed(2)}</h2> }
+                                <div style={styles.transactionAmount}>
+                                    {transaction.amount < 0 ? <h2 style={styles.amountRed}>- £{(transaction.amount * -1).toFixed(2)}</h2> : <h2 style={styles.amountGreen}>+ £{(transaction.amount).toFixed(2)}</h2> }
+                                </div>
                             </div>
                         )
                     })}

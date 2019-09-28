@@ -32,8 +32,10 @@ class Account extends Component {
                     { this.showAccountDetails() }
                 </div>
                 <div style={styles.balanceContainer}>
-                    <h1>£</h1>
-                    <h1>{this.props.balance.toFixed(2)}</h1>
+                    <div style={styles.balanceBubble}>
+                        <h1 style={styles.h1}>£</h1>
+                        <h1 style={styles.h1}>{this.props.balance.toFixed(2)}</h1>
+                    </div>
                 </div>
             </div>
         )

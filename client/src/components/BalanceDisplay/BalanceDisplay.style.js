@@ -2,16 +2,17 @@ const styles = {
     displayContainer: {
         width: '25%',
         height: '170px',
-        backgroundColor: '#FFFFFF',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-        borderRadius: '5px',
+        backgroundColor: '#fff',
+        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
+        borderRadius: '10px',
         padding: '15px',
         marginBottom: '30px'
     },
     balanceLabel: {
         margin: '0px',
         marginBottom: '5px',
-        fontWeight: 'bold'
+        fontWeight: '300',
+        fontSize: '16px'
     },
     balanceContainer: {
         display: 'flex',
@@ -21,7 +22,7 @@ const styles = {
         justifyContent: 'center'
     },
     balanceNumber: {
-        fontSize: '60px'
+        fontSize: '50px'
     }
 }
 

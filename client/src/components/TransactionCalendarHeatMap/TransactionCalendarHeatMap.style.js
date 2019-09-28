@@ -6,8 +6,8 @@ const styles = {
         paddingBottom: '20px',
         paddingLeft: '20px',
         paddingRight: '5px',
-        borderRadius: '5px',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+        borderRadius: '10px',
+        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
         backgroundColor: '#ffffff',
         transition: 'all 0.3s ease-out'
     },
@@ -19,8 +19,8 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: '5px',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+        borderRadius: '10px',
+        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
         backgroundColor: '#ffffff',
         transition: 'all 0.3s ease-out'
     },

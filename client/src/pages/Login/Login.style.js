@@ -1,28 +1,17 @@
 const styles = {
     loginContainer: {
-        width: '900px',
+        width: '400px',
         height: '600px',
         borderRadius: '10px',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
+        background: '#fff',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row'
     },
-    left: {
-        width: '40%',
-        height: '100%',
-        background: '#273c75',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-        borderTopLeftRadius: '10px',
-        borderBottomLeftRadius: '10px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    logo: {
-        color: '#fff'
+    Logo: {
+        color: '#7A9E7E',
+        marginBottom: "25px"
     },
     leftTitle: {
         fontSize: '50px',
@@ -31,7 +20,7 @@ const styles = {
         marginTop: '10px'
     },
     right: {
-        width: '60%',
+        width: '100%',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -47,8 +36,8 @@ const styles = {
         width: '300px',
         height: '40px',
         borderRadius: '5px',
-        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
-        background: '#273c75',
+        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
+        background: '#7A9E7E',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -71,8 +60,8 @@ const styles = {
         width: '300px',
         height: '40px',
         borderRadius: '5px',
-        boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
-        background: '#273c75',
+        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
+        background: '#7A9E7E',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

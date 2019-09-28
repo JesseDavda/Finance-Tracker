@@ -15,11 +15,8 @@ class Login extends Component {
                 loginButton={false}
             >
                 <div style={styles.loginContainer}>
-                    <div style={styles.left}>
-                        <FontAwesomeIcon style={styles.logo} icon={faAnalytics} size="9x"/>
-                        <h1 style={styles.leftTitle}>snapshot</h1>
-                    </div>
                     <div style={styles.right}>
+                        <FontAwesomeIcon icon={faAnalytics} style={styles.Logo} size="7x" />
                         <h1 style={styles.loginTitle}>Welcome to snapshot</h1>
                         <p style={styles.loginText}>Login with google to save account data and view multiple accounts</p>
                         <div className="loginButton" style={styles.loginWithGoogleButton}>

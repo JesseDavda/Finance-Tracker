@@ -5,8 +5,8 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         backgroundColor: '#fff',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-        borderRadius: '5px',
+        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
+        borderRadius: '10px',
         position: 'relative',
         marginBottom: '30px'
     },
@@ -33,10 +33,10 @@ const styles = {
     },
     accountDetailsContainer: {
         display: 'flex',
-        marginTop: '20px'
+        marginTop: '20px',
     },
     sortCodeContainer: {
-        marginRight: '20px'
+        marginRight: '20px',
     },
     label: {
         fontSize: "12px",
@@ -55,6 +55,19 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    h1: {
+        margin: '0px'
+    },
+    balanceBubble: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 'fit-content',
+        height: 'fit-content',
+        background: '#F2F2F2',
+        padding: '10px',
+        borderRadius: '10px'
     }
 }
 

@@ -54,7 +54,7 @@ class BalanceDisplay extends Component {
     render() {
         return(
             <div style={styles.displayContainer}>
-                <p style={styles.balanceLabel}>Combined account balance:</p>
+                <p style={styles.balanceLabel}>COMBINED ACCOUNT BALANCE:</p>
                 <div style={styles.balanceContainer}>
                     {this.state.balanceReady ? <h1 style={styles.balanceNumber}>£{(this.state.balance).toFixed(2)}</h1> : <LoadingAnimation />}
                 </div>
