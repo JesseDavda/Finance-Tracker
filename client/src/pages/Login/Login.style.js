@@ -13,6 +13,19 @@ const styles = {
         color: '#7A9E7E',
         marginBottom: "25px"
     },
+    googleBox: {
+        width: 'fit-content',
+        height: 'fit-content',
+        display: 'flex',
+        alignItems: 'center',
+        justifyIontent: 'center',
+        padding: '5px',
+        background: '#fff',
+        borderRadius: '50%',
+        marginLeft: '5px',
+        position: 'absolute',
+        left: '10px'
+    },
     leftTitle: {
         fontSize: '50px',
         color: '#fff',
@@ -33,6 +46,7 @@ const styles = {
         margin: '0px'
     },
     loginWithGoogleButton: {
+        position: 'relative',
         width: '300px',
         height: '40px',
         borderRadius: '5px',
@@ -43,9 +57,7 @@ const styles = {
         justifyContent: 'center',
     },
     googleLogo: {
-        width: '60px',
-        marginTop: '4px',
-        marginLeft: '5px'
+        width: '18px'
     },
     loginText: {
         width: '300px',
@@ -57,6 +69,7 @@ const styles = {
         color: '#bbb'
     },
     trueLayerButton: {
+        position: 'relative',
         width: '300px',
         height: '40px',
         borderRadius: '5px',
@@ -68,7 +81,8 @@ const styles = {
     },
     viewAccount: {
         fontWeight: '500',
-        color: '#fff'
+        color: '#fff',
+        textDecoration: 'none'
     },
     loginWith: {
         fontWeight: '500',
@@ -76,7 +90,9 @@ const styles = {
     },
     buttonLogo: {
         color: '#fff',
-        marginLeft: '10px'
+        marginLeft: '10px',
+        position: 'absolute',
+        left: '10px'
     }
 }
 

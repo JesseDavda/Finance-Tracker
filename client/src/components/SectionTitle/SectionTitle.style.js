@@ -8,7 +8,8 @@ const styles = {
     sectionTitle: {
         marginLeft: '30px',
         fontSize: '36px',
-        fontWeight: '300'
+        fontWeight: '300',
+        color: '#7A9E7E'
     }
 }
 

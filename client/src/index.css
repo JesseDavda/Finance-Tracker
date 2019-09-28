@@ -13,6 +13,14 @@ code {
     monospace;
 }
 
+.menuItem:hover {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
 .react-calendar-heatmap .color-empty { fill: #cccccc; }
 .react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
 .react-calendar-heatmap .color-scale-2 { fill: #8cc665; }

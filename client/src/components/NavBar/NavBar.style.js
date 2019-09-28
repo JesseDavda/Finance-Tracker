@@ -7,7 +7,7 @@ const styles = {
         position: 'relative'
     },
     logo: {
-        color: '#273c75'
+        color: '#7A9E7E'
     },
     logoContainer: {
         position: 'absolute',
@@ -18,7 +18,8 @@ const styles = {
         fontWeight: '300',
         fontSize: '32px',
         margin: '0px',
-        marginLeft: '10px'
+        marginLeft: '10px',
+        color: '#7A9E7E'
     },
     loginContainer: {
         position: 'absolute',

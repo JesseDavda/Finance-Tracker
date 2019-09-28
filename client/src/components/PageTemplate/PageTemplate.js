@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './PageTemplate.style';
 
 import NavBar from '../NavBar';
+import SideMenu from '../SideMenu';
 
 class PageTemplate extends Component {
     render() {
@@ -12,6 +13,7 @@ class PageTemplate extends Component {
                             loginButton={this.props.loginButton}
                         />
                         <div style={styles.pageContentContainer}>
+                            {/* <SideMenu /> */}
                             {this.props.children}
                         </div>
                 </div>
