@@ -17,7 +17,7 @@ function objectMap(object, mapFn) {
     }, {})
 }
 
-function getTransactionData(accountId) {
+function callAPIForData(accountId) {
     const config = {
         headers: {
             'Authorization': `Bearer ${store.get('TRUE_LAYER_ACCESS_TOKEN')}`
@@ -25,6 +25,10 @@ function getTransactionData(accountId) {
     }
 
     return axios.get(`https://api.truelayer.com/data/v1/accounts/${accountId}/transactions?from=&to=`, config)
+}
+
+function getTransactionData(accountId) {
+    return callAPIForData(accountId)
             .then(response => {
                 let collatedData = {};
                 
@@ -46,5 +50,6 @@ function getTransactionData(accountId) {
 
 export {
     getTransactionData,
+    callAPIForData,
     objectMap
 };

@@ -14,6 +14,7 @@ import loadTLAccounts from './routes/loadTLAccounts';
 import getAccountBalance from './routes/getAccountBalance';
 import getTransactions from './routes/getTransactions';
 import getAverageDailySpend from './routes/getAverageDailySpend';
+import getPredictedPayments from './routes/getPredictedPayments';
 
 app.use(monzoAccounts);
 app.use(monzoAuth);
@@ -23,6 +24,7 @@ app.use(loadTLAccounts);
 app.use(getAccountBalance);
 app.use(getTransactions);
 app.use(getAverageDailySpend);
+app.use(getPredictedPayments);
 
 const PORT = 3001 || process.env.PORT;
 app.listen(PORT, () => {

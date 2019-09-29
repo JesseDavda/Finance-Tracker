@@ -13,7 +13,7 @@ class PageTemplate extends Component {
                             loginButton={this.props.loginButton}
                         />
                         <div style={styles.pageContentContainer}>
-                            {/* <SideMenu /> */}
+                            <SideMenu />
                             {this.props.children}
                         </div>
                 </div>

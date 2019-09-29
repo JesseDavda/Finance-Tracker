@@ -81,7 +81,7 @@ class Home extends Component {
                     accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
                 />
                 <SectionTitle
-                    title={"Average Time Of Transactions"}
+                    title={"Repeating Payments"}
                 />
             </div>
         )

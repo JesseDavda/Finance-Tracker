@@ -8,7 +8,7 @@ const styles = {
     },
     pageContentContainer: {
         position: 'relative',
-        width: '1100px',
+        width: '1250px',
         margin: '0 auto',
         padding: '0px',
         paddingTop: '50px',
