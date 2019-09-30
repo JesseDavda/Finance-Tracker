@@ -26,12 +26,12 @@ function filterOutRoundUpsAndReduce(transactions, date) {
     if(reducedTransactions !== 0) {
         return {
             date: date.substring(5, 10),
-            average_spend: (reducedTransactions / filteredTransactions.length)
+            average_spend: Number((reducedTransactions / filteredTransactions.length).toFixed(2))
         }
     } else {
         return {
             date: date.substring(5, 10),
-            average_spend: reducedTransactions
+            average_spend: Number((reducedTransactions).toFixed(2))
         }
     }
 }

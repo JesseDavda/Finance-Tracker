@@ -81,8 +81,9 @@ class Home extends Component {
                     accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
                 />
                 <SectionTitle
-                    title={"Repeating Payments"}
+                    title={"Write copy for this title!"}
                 />
+                
             </div>
         )
     }

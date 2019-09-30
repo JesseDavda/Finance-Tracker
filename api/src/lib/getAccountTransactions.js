@@ -17,18 +17,18 @@ function objectMap(object, mapFn) {
     }, {})
 }
 
-function callAPIForData(accountId) {
+function callAPIForData(accountId, from, to) {
     const config = {
         headers: {
             'Authorization': `Bearer ${store.get('TRUE_LAYER_ACCESS_TOKEN')}`
         }
     }
 
-    return axios.get(`https://api.truelayer.com/data/v1/accounts/${accountId}/transactions?from=&to=`, config)
+    return axios.get(`https://api.truelayer.com/data/v1/accounts/${accountId}/transactions?from=${from}&to=${to}`, config)
 }
 
-function getTransactionData(accountId) {
-    return callAPIForData(accountId)
+function getTransactionData(accountId, from, to) {
+    return callAPIForData(accountId, from, to)
             .then(response => {
                 let collatedData = {};
                 
