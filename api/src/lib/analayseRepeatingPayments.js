@@ -9,18 +9,18 @@ function objectMap(object, mapFn) {
 }
 
 function analysePayments(transactions) {
-    const firstStage = filterOutNoClassification(transactions);
-    const secondStage = groupByClassification(firstStage);
-    const thirdStage = iterateOverClassifications(secondStage);
-    const fourthStage = flattenMerchantObjects(thirdStage);
-    const fifthStage = filterOutNonWeekly(fourthStage);
-    const sixthStage = groupWeekly(fifthStage);
-    const seventhStage = flattenGroupedData(fifthStage);
-    const eighthStage = flattenedWeeklyGroupedData(seventhStage);
-    const ninthStage = collateData(eighthStage);
-    const tenthStage = removeEmptyClassifications(ninthStage);
+    const functionChain = [
+        filterOutNoClassification,
+        groupByClassification,
+        iterateOverClassifications,
+        flattenMerchantObjects,
+        filterOutNonWeekly,
+        flattenedWeeklyGroupedData,
+        collateData,
+        removeEmptyClassifications
+    ]
 
-    return tenthStage;
+    return functionChain.reduce((value, nextFunction) => nextFunction(value), transactions);
 }
 
 function filterOutNoClassification(transactions) {
@@ -51,6 +51,7 @@ function filterOutNonWeekly(flattenedGroupedTransactions) {
     })
 }
 
+// This function isn't used for now as I pivoted from trying to find recurring payments to finding biggest groups of payments
 function groupWeekly(filteredFlattenedTransactions) {
     return objectMap(filteredFlattenedTransactions, (classification) => {
         return classification.map(merchant => {
