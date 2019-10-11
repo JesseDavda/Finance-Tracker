@@ -9,6 +9,7 @@ import PageTemplate from '../../components/PageTemplate';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import SectionTitle from '../../components/SectionTitle';
 import DailySpendChart from '../../components/DailySpendChart';
+import RecurringPayments from '../../components/RecurringPayments';
 
 import styles from './Home.style';
 class Home extends Component {
@@ -81,9 +82,11 @@ class Home extends Component {
                     accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
                 />
                 <SectionTitle
-                    title={"Write copy for this title!"}
+                    title={"Repeated Payments"}
                 />
-                
+                <RecurringPayments
+                    accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
+                />
             </div>
         )
     }

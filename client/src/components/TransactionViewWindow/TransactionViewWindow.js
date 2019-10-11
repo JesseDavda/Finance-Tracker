@@ -18,6 +18,8 @@ class TransactionViewWindow extends Component {
                 transactions: props.data
             }
         }
+
+        return state;
     }
 
     renderLabel(transaction) {
@@ -35,7 +37,7 @@ class TransactionViewWindow extends Component {
         if(_.isEmpty(this.state.transactions)) {           
             return(
                 <div style={styles.transactionViewContainerEmpty}>
-                    <h3>Try clicking on a day on the heatmap to the left!</h3>
+                    <h3 style={styles.transactionViewEmptyPrompt}>Try clicking on a day on the heatmap to the left!</h3>
                 </div>
             )
         } else {

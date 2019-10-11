@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Area } from 'recharts';
 import axios from 'axios';
-import styles from './DailySpendChart.style'
+import _ from 'lodash';
+
+import styles from './DailySpendChart.style';
+
+import LoadingAnimation from '../LoadingAnimation';
 
 class DailySpendChart extends Component {
     constructor(props) {
@@ -15,7 +19,7 @@ class DailySpendChart extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if(props.accountId !== state.account_id) {
+        if(props.accountId !== state.accountId) {
             return {
                 accountId: props.accountId
             }
@@ -45,7 +49,7 @@ class DailySpendChart extends Component {
             <AreaChart 
                 width={1050}
                 height={250}
-                data={this.state.dailySpendData}
+                data={this.state.dailySpendData.reverse()}
                 margin={{top: 10, bottom: 10, left: 10, right: 10}}
             >
                 <defs>
@@ -64,6 +68,14 @@ class DailySpendChart extends Component {
     }
 
     render() {
+        if(_.isEmpty(this.state.dailySpendData)) {
+            return(
+                <div style={styles.chartContainerEmpty} >
+                    <LoadingAnimation />
+                </div>
+            )
+        }
+
         return(
             <div style={styles.chartContainer} >
                 {this.areaChart()}

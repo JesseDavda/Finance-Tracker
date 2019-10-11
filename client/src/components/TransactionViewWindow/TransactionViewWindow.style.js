@@ -14,14 +14,15 @@ const styles = {
     },
     transactionViewContainerEmpty: {
         width: '700px',
-        height: '500px',
+        height: '450px',
         padding: '20px',
-        borderRadius: '10px',
-        boxShadow: '0px 3px 117px -26px rgba(204,204,204,1)',
-        backgroundColor: '#ffffff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    transactionViewEmptyPrompt: {
+        fontWeight: '300',
+        color: '#777777'
     },
     transactionContainer: {
         width: '100%',

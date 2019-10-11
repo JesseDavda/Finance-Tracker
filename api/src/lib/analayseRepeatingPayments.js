@@ -74,6 +74,21 @@ function flattenedWeeklyGroupedData(transactionDataToBeFlattened) {
     });
 }
 
+function getMeanInterval(array, numberOfTransactions) {
+    return array.reduce((accumulator, currentTransaction, currentIndex, array) => {
+        return Number(accumulator) + Number(moment(currentTransaction.timestamp).subtract(array[currentIndex === 0 ? currentIndex : currentIndex - 1].timestamp).format('DD'))
+    }, []) / numberOfTransactions;
+}
+
+function calculateStandardDeviation(array, mean) {
+    const insideLoop = array.reduce((acc, curVal, curIndex, arrayToReduce) => {
+        let calcVal = Math.pow(Number(moment(curVal.timestamp).subtract(arrayToReduce[curIndex === 0 ? curIndex : curIndex - 1].timestamp).format('DD') - mean), 2)
+        return Number(acc) + Number(calcVal)
+    }, 0)
+
+    return Math.sqrt(insideLoop / (array.length - 1));
+}
+
 function collateData(formattedTransactionData) {
     return objectMap(formattedTransactionData, (classification) => {
         if(classification.length === 1) {
@@ -87,9 +102,7 @@ function collateData(formattedTransactionData) {
 
             const numberOfTransactions = classification[0].length;
 
-            const averageInterval = classification[0].reduce((accumulator, currentTransaction, currentIndex, array) => {
-                return Number(accumulator) + Number(moment(currentTransaction.timestamp).subtract(array[currentIndex === 0 ? currentIndex : currentIndex - 1].timestamp).format('DD'))
-            }, []) / numberOfTransactions;
+            const averageInterval = calculateStandardDeviation(classification[0], getMeanInterval(classification[0], numberOfTransactions));
 
             return {
                 name_of_merchant: merchantName,
@@ -110,9 +123,8 @@ function collateData(formattedTransactionData) {
 
                 const numberOfTransactions = merchant.length;
 
-                const averageInterval = merchant.reduce((accumulator, currentTransaction, currentIndex, array) => {
-                    return Number(accumulator) + Number(moment(currentTransaction.timestamp).subtract(array[currentIndex === 0 ? currentIndex : currentIndex - 1].timestamp).format('DD'))
-                }, []) / numberOfTransactions;
+                const averageInterval = calculateStandardDeviation(merchant, getMeanInterval(merchant, numberOfTransactions));
+
 
                 return {
                     name_of_merchant: merchantName,
