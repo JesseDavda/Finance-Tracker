@@ -9,7 +9,9 @@ const router = express.Router();
 import { getTransactionData } from '../lib/getAccountTransactions'
 
 router.get('/transactions', async (req, res) => {
-    const accountTransactions = await getTransactionData(req.query.accountId, "", "")
+    const googleId = req.query.google_id;
+
+    const accountTransactions = await getTransactionData(req.query.accountId, googleId, "", "")
                                         .then(response => {
                                             res.status(200).json(response).end();
                                         });

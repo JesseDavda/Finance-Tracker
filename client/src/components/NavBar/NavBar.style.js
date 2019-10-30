@@ -46,6 +46,25 @@ const styles = {
         width: '60px',
         marginTop: '4px',
         marginLeft: '5px'
+    },
+    profileContainer: {
+        width: '150px',
+        height: '60px',
+        position: 'absolute',
+        right: '50px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+    avatar: {
+        width: '40px',
+        height: '40px',
+        borderRadius: '10px',
+    },
+    nameContainer: {
+        width: '100px',
+        height: '100%',
+        display: 'flex',
     }
 }
 

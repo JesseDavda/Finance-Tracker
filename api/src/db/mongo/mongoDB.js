@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const DB_SRV_URL = `mongodb+srv://localuser:${process.env.SRV_PASS}@snapshot-accounts-hdccy.mongodb.net/test?retryWrites=true&w=majority`;
+const DB_SRV_URL = `mongodb+srv://node_server_account:${process.env.SRV_PASS}@snapshot-accounts-hdccy.mongodb.net/test?retryWrites=true&w=majority`;
 
 mongoose.connect(DB_SRV_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => { console.log('Connected to the snapshot mongodb database') },

@@ -28,7 +28,8 @@ class RecurringPayments extends Component {
     }
 
     getPaymentData() {
-        axios.get(`http://localhost:3001/recurringPayments?accountId=${this.state.accountId}`)
+        const googleId = window.localStorage.getItem('google_id');
+        axios.get(`http://localhost:3001/recurringPayments?accountId=${this.state.accountId}&google_id=${googleId}`)
             .then(response => {
                 const dataArray = [];
                 
@@ -64,25 +65,25 @@ class RecurringPayments extends Component {
     populateMarkupForPayment(data) {
         return(
             <div style={styles.paymentContainer}>
-                <div style={styles.merchantLabel}>
+                <div>
                     <h4 style={styles.paymentLabel}>MERCHANT</h4>
-                    <h3>{data.name_of_merchant}</h3>
+                    <h3 style={styles.paymentData}>{data.name_of_merchant}</h3>
                 </div>
-                <div style={styles.totalPayments}>
+                <div style={styles.paymentStatistic}>
                     <h4 style={styles.paymentLabel}>TOTAL PAYMENTS</h4>
-                    <h3>{data.number_of_transactions}</h3>
+                    <h3 style={styles.paymentData}>{data.number_of_transactions}</h3>
                 </div>
-                <div style={styles.averagePayment}>
+                <div style={styles.paymentStatistic}>
                     <h4 style={styles.paymentLabel}>AVERAGE PAYMENT</h4>
-                    <h3>£{data.average_amount_spent.toFixed(2)}</h3>
+                    <h3 style={styles.paymentData}>£{data.average_amount_spent}</h3>
                 </div>
-                <div style={styles.averageInterval}>
+                <div style={styles.paymentStatistic}>
                     <h4 style={styles.paymentLabel}>AVERAGE INTERVAL</h4>
-                    <h3>{data.average_interval} days</h3>
+                    <h3 style={styles.paymentData}>{data.average_interval} days</h3>
                 </div>
-                <div style={styles.totalSpent}>
+                <div style={{ ...styles.totalSpent, ...styles.paymentStatistic }}>
                     <h4 style={styles.paymentLabel}>TOTAL SPENT</h4>
-                    <h3>£{data.total_amount_spent.toFixed(2)}</h3>
+                    <h3 style={styles.paymentData}>£{data.total_amount_spent}</h3>
                 </div>
             </div>
         )
@@ -104,28 +105,7 @@ class RecurringPayments extends Component {
             return(
                 <div style={styles.classificationContainer}>
                     <h2 style={styles.classification}>{data.classification}</h2>
-                    <div style={styles.paymentContainer}>
-                        <div style={styles.merchantLabel}>
-                            <h4 style={styles.paymentLabel}>MERCHANT</h4>
-                            <h3>{data.name_of_merchant}</h3>
-                        </div>
-                        <div style={styles.totalPayments}>
-                            <h4 style={styles.paymentLabel}>TOTAL PAYMENTS</h4>
-                            <h3>{data.number_of_transactions}</h3>
-                        </div>
-                        <div style={styles.averagePayment}>
-                            <h4 style={styles.paymentLabel}>AVERAGE PAYMENT</h4>
-                            <h3>£{data.average_amount_spent}</h3>
-                        </div>
-                        <div style={styles.averageInterval}>
-                            <h4 style={styles.paymentLabel}>AVERAGE INTERVAL</h4>
-                            <h3>{data.average_interval} days</h3>
-                        </div>
-                        <div style={styles.totalSpent}>
-                            <h4 style={styles.paymentLabel}>TOTAL SPENT</h4>
-                            <h3>£{data.total_amount_spent}</h3>
-                        </div>
-                    </div>
+                    {this.populateMarkupForPayment(data)}
                 </div>
             )
         }

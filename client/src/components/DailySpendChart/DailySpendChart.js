@@ -29,7 +29,8 @@ class DailySpendChart extends Component {
     }
 
     getDailySpendData() {
-        axios.get(`http://localhost:3001/averageSpendDaily?accountId=${this.state.accountId}`)
+        const googleId = window.localStorage.getItem('google_id');
+        axios.get(`http://localhost:3001/averageSpendDaily?accountId=${this.state.accountId}&google_id=${googleId}`)
             .then(response => {
                 console.log(response.data);
                 this.setState({ dailySpendData: response.data, accountIdNeeded: false})

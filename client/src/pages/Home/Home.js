@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import qs from 'querystring';
 import _ from 'lodash';
 
 import Account from '../../components/Account';
@@ -16,20 +17,48 @@ class Home extends Component {
     constructor(props) {
         super(props);
 
+        console.log(qs.parse(props.location.search));
+
         this.state = {
             accounts: [],
-            heatmap_account_id: ""
+            heatmap_account_id: "",
+            tl_code: qs.parse(props.location.search)['?code'],
+            stored_accounts: JSON.parse(window.localStorage.getItem('account_data')).accounts
         }
 
     }
     
     componentDidMount() {
-        axios.get('http://localhost:3001/loadAccounts')
-            .then(response => {
-                this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
-            }).catch(e => {
-                console.log(e);
-            })
+        if(this.state.tl_code !== undefined) {
+            const google_id = window.localStorage.getItem('google_id');
+            const req_url = `http://localhost:3001/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
+            axios.get(req_url)
+                .then(response => {
+                    console.log(response);
+                    this.loadAccounts(google_id);
+                }).catch(e => {
+                    console.log(e);
+                });
+        } else {
+            const google_id = window.localStorage.getItem('google_id');
+            this.loadAccounts(google_id);
+        }
+    }
+
+    loadAccounts(google_id) {
+        if(_.isEmpty(this.state.stored_accounts)) {
+            axios.get(`http://localhost:3001/loadAccounts?google_id=${google_id}`)
+                .then(response => {
+                    const stored_accounts_object = JSON.parse(window.localStorage.getItem('account_data'));
+                    stored_accounts_object.accounts = response.data;
+                    window.localStorage.setItem('account_data', JSON.stringify(stored_accounts_object));
+                    this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
+                }).catch(e => {
+                    console.log(e.response.data);
+                });
+        } else {
+            this.setState({accounts: this.state.stored_accounts, heatmap_account_id: this.state.stored_accounts[0].accoundId})
+        }
     }
 
     renderAccounts() {

@@ -1,27 +1,23 @@
 import express from 'express';
 import qs from 'queryString';
 import axios from 'axios';
-import store from '../lib/store';
-console.log("STORE: ", store);
+
+import { Accounts } from '../db/mongo/models';
 
 const router = express.Router();
 
-router.get('/trueLayerAuth', (req, res) => {
-    res.redirect(process.env.TRUE_LAYER_REDIRECT_URL);
-});
+router.get('/getTrueLayerAccessToken', (req, res) => {
+    const googleId = req.query.google_id;
 
-router.get('/trueLayerCallback', (req, res) => {
-    console.log("Request Parameters: ", req.query.code);
-
-    let postObject = {
+    const postObject = {
         grant_type: 'authorization_code',
         client_id: process.env.TRUE_LAYER_CLIENT_ID,
         client_secret: process.env.TRUE_LAYER_CLIENT_SECRET,
-        redirect_uri: 'http://localhost:3001/trueLayerCallback',
+        redirect_uri: 'http://localhost:3000/myAccounts',
         code: req.query.code
     }
 
-    let config = {
+    const config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -29,10 +25,20 @@ router.get('/trueLayerCallback', (req, res) => {
 
     axios.post('https://auth.truelayer.com/connect/token', qs.stringify(postObject), config)
         .then(response => { 
-            store.set('TRUE_LAYER_ACCESS_TOKEN', response.data.access_token);
-            store.set('TRUE_LAYER_REFRESH_TOKEN', response.data.refresh_token);
-            res.redirect('/loadAccounts'); 
-        }).catch(e => console.log(e));
+            const updateObject = {
+                tl_access_token: response.data.access_token,
+                tl_refresh_token: response.data.refresh_token
+            }
+
+            Accounts.findOneAndUpdate({google_id: googleId}, {$set: {...updateObject}}, {new: true}, (err, doc) => {
+                if(err) console.log("There was an error updating the data: ", err);
+
+                res.status(200).json({google_id: doc.google_id}).end();
+            }); 
+        }).catch(e => {
+            console.log(e.response.data)
+            res.status(500).json({error: e.response.data}).end();
+        });
 });
 
 export default router;

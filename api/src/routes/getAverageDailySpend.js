@@ -37,10 +37,10 @@ function filterOutRoundUpsAndReduce(transactions, date) {
 }
 
 router.get('/averageSpendDaily', async (req, res) => {
-    console.log("called");
     const accountId = req.query.accountId;
+    const googleId = req.query.google_id;
 
-    const transactions = await getTransactionData(accountId)
+    const transactions = await getTransactionData(accountId, googleId)
         .then(response => {
             const transactionData = Object.keys(response).map((key) => {
                 return response[key];

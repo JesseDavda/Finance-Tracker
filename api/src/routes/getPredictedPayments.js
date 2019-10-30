@@ -9,11 +9,14 @@ const router = express.Router();
 
 router.get('/recurringPayments', async (req, res) => {
     const accountId = req.query.accountId;
+    const googleId = req.query.google_id
     const from = moment().subtract(1, 'year').format('YYYY-MM-DD'), to = moment().subtract(1, 'day').format('YYYY-MM-DD');
-
-    const transactions = await callAPIForData(accountId, from, to).catch(e => console.log(e));
-
-    res.status(200).json(analysePayments(transactions.data.results)).end();
+    debugger;
+    const transactions = await callAPIForData(accountId, googleId, from, to).catch(e => console.log(e.response.data));
+    debugger;                   
+    const analysedData = transactions.hasOwnProperty("data") ? analysePayments(transactions.data.results) : { "error": "No data returned" }; 
+    debugger;
+    res.status(200).json(analysedData).end();
 });
 
 export default router;

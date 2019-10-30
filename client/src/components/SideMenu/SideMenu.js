@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCreditCard, faShoppingCart, faUserChart } from '@fortawesome/pro-light-svg-icons';
+import { faCreditCard, faShoppingCart, faUserChart, faRepeat } from '@fortawesome/pro-light-svg-icons';
 
 import styles from './SideMenu.style';
 
@@ -13,6 +13,7 @@ class SideMenu extends Component {
                 </div>
                 <FontAwesomeIcon className="menuItem" icon={faShoppingCart} size="2x" style={styles.transactionsIcon} />
                 <FontAwesomeIcon className="menuItem" icon={faUserChart} size="2x" style={styles.transactionsIcon} />
+                <FontAwesomeIcon className="menuItem" icon={faRepeat} size="2x" style={styles.transactionsIcon} />
             </div>
         )
     }

@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "source .env.bash && nodemon --exec babel-node src/server.js",
-    "startDev": "source .env.bash && node --inspect --exec babel-node src/server.js"
+    "startDev": "source .env.bash && nodemon --inspect --exec babel-node src/server.js"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.5.5",
@@ -20,7 +20,8 @@
     "moment": "^2.24.0",
     "mongoose": "^5.7.1",
     "querystring": "^0.2.0",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",

@@ -4,10 +4,14 @@ const Schema = mongoose.Schema;
 const accountSchema = new Schema({
     first_name: String,
     last_name: String,
+    google_id: Number,
+    picture_uri: String,
     email: String,
-    time_till_next_login: Date,
-    linked_accounts: Array,
-    cookie_key: String
+    linked_bank_accounts: Array,
+    cookie_key: String,
+    state: String,
+    tl_access_token: String,
+    tl_refresh_token: String
 });
 
 export {

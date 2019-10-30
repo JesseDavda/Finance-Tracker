@@ -1,5 +1,6 @@
 import store from './store.js';
 import axios from 'axios';
+import refreshAccessToken from './refreshAccessToken.js';
 
 let access_token = store.get('TRUE_LAYER_ACCESS_TOKEN');
 
@@ -10,15 +11,17 @@ function requestBalance(account_id) {
         }
     }
 
-    return axios.get(`https://api.truelayer.com/data/v1/accounts/${account_id}/balance`, config)
+    return axios.get(`https://api.truelayer.com/data/v1/accounts/${account_id}/balance`, config);
 }
 
 async function getBalance(account_id) {
     try {
-        let response = await requestBalance(account_id);
-        return response.data.results[0].current
-    } catch(error) {
-        console.log(error)
+        const response = await requestBalance(account_id);
+        return response.data.results[0].current;
+    } catch {
+        await refreshAccessToken();
+        const response = await requestBalance(account_id);
+        return response.data.results[0].current;
     }
 }
 

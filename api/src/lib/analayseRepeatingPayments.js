@@ -98,7 +98,10 @@ function collateData(formattedTransactionData) {
 
             const merchantName = classification[0][0].merchant_name ? 
                                     classification[0][0].merchant_name : 
-                                    classification[0][0].meta.provider_description.split(' ')[0];
+                                    (classification[0][0].meta.provider_description ?
+                                        classification[0][0].meta.provider_description.split(' ')[0] :
+                                        classification[0][0].description);
+            
 
             const numberOfTransactions = classification[0].length;
 
@@ -119,8 +122,11 @@ function collateData(formattedTransactionData) {
 
                 const merchantName = merchant[0].merchant_name ? 
                                         merchant[0].merchant_name : 
-                                        merchant[0].meta.provider_description.split(' ')[0];
-
+                                        (merchant[0].meta.provider_description ?
+                                            merchant[0].meta.provider_description.split(' ')[0] :
+                                            merchant[0].description);
+                
+                
                 const numberOfTransactions = merchant.length;
 
                 const averageInterval = calculateStandardDeviation(merchant, getMeanInterval(merchant, numberOfTransactions));

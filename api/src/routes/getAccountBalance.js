@@ -24,7 +24,7 @@ router.get('/getBalance', (req, res) => {
 
             res.status(200).json(balanceObj).end();
         }).catch(e => {
-            console.log(e);
+            console.log(e.response.data);
         });
 });
 

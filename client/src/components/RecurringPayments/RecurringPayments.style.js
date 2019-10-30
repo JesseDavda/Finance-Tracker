@@ -38,6 +38,21 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    paymentStatistic: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    paymentData: {
+        marginTop: '0px'
+    },
+    totalSpent: {
+        height: '98%',
+        borderRadius: '10px',
+        padding: '0 15px',
+        backgroundColor: '#7A9E7E',
+        color: '#FFFFFF',
     }
 }
 

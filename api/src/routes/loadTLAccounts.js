@@ -1,14 +1,16 @@
 import express from 'express';
 import axios from 'axios';
 import store from '../lib/store.js';
+import refreshAccessToken from '../lib/refreshAccessToken.js';
+import { Accounts } from '../db/mongo/models';
 
 const router = express.Router();
 
-async function getBalances(accounts) {
+async function getBalances(accounts, access_token) {
     return await Promise.all(accounts.map(account => {
         let config = {
             headers: {
-                "Authorization": `Bearer ${store.get('TRUE_LAYER_ACCESS_TOKEN')}`
+                "Authorization": `Bearer ${access_token}`
             }
         }
 
@@ -19,6 +21,7 @@ async function getBalances(accounts) {
                             ...account
                         }
                     }).catch(e => {
+                        
                         return {
                             balance: {
                                 current: "Balance not found",
@@ -29,22 +32,39 @@ async function getBalances(accounts) {
     }))
 }
 
-router.get('/loadAccounts', async (req, res) => {
-    let accounts = [];
+async function callForAccounts(googleId) {
+    const accessToken = await Accounts.findOne({google_id: googleId}).exec()
+        .then(doc => {
+            return doc.tl_access_token;
+        }).catch(e => {
+            console.log(e);
+        })
 
-    let config = {
+    const config = {
         headers: {
-            "Authorization": `Bearer ${store.get('TRUE_LAYER_ACCESS_TOKEN')}`
+            "Authorization": `Bearer ${accessToken}`
         }
     }
+    
+    return axios.get('https://api.truelayer.com/data/v1/accounts', config)
+            .then(response => {
+                return getBalances(response.data.results, accessToken).then(res => res)
+            }).catch(async e => {
+                await refreshAccessToken(googleId);
+                return callForAccounts();
+            });
+}
+
+router.get('/loadAccounts', async (req, res) => {
+    const googleId = req.query.google_id;
+    let accounts = [];
 
     try {
-        accounts = await axios.get('https://api.truelayer.com/data/v1/accounts', config)
-            .then(response => getBalances(response.data.results).then(res => res));
+        accounts = await callForAccounts(googleId);
 
         res.status(200).json(accounts).end();
     } catch(e) {
-        console.log(e);
+        console.log(e.response.data);
     }
 });
 

@@ -35,7 +35,8 @@ class TransactionCalendarHeatMap extends Component {
     }
 
     getTransactionData() {
-        axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId}`)
+        const googleId = window.localStorage.getItem('google_id');
+        axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId}&google_id=${googleId}`)
                 .then(response => {
                     console.log(response)
                     this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false});
