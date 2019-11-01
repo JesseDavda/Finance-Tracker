@@ -6,6 +6,6 @@
   "author": "JesseDavda <jessepilot@live.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cd ./api && yarn run start"
+    "start": "cd ./api && npm run start"
   }
 }
