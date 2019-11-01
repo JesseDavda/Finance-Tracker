@@ -4,9 +4,11 @@ import qs from 'querystring';
 import { Accounts } from '../db/mongo/models';
 
 async function refreshAccessToken(googleId) {
+    if(googleId === undefined) return 'googleId is undefined';
+
     const refreshToken = await Accounts.findOne({google_id: googleId}).exec()
     .then(doc => {
-        return doc === null ? doc.tl_refresh_token : 0;
+        return doc !== null ? doc.tl_refresh_token : 0;
     }).catch(e => {
         console.log("There was an error finding the account: ", e);
         return 0;
@@ -24,6 +26,7 @@ async function refreshAccessToken(googleId) {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }
+    
     if(refreshToken !== 0) {
         return axios.post('https://auth.truelayer.com/connect/token', qs.stringify(refreshBody), config)
             .then(async response => {

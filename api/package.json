@@ -5,8 +5,9 @@
   "author": "JesseDavda <jessedavda@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "source .env.bash && nodemon --exec babel-node src/server.js",
-    "startDev": "source .env.bash && nodemon --inspect --exec babel-node src/server.js"
+    "start": "nodemon --exec babel-node src/server.js",
+    "startDev": "source .env.bash && nodemon --exec babel-node src/server.js",
+    "startDebug": "source .env.bash && nodemon --inspect-brk --exec babel-node src/server.js"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.5.5",

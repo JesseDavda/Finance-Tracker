@@ -15,6 +15,8 @@ import getTransactions from './routes/getTransactions';
 import getAverageDailySpend from './routes/getAverageDailySpend';
 import getPredictedPayments from './routes/getPredictedPayments';
 import googleAuth from './routes/googleLoginHandler';
+import addBankAccounts from './routes/addBankAccounts';
+import getAccountInfo from './routes/getAccountInfo';
 
 app.use(trueLayerAuth);
 app.use(refreshTLToken);
@@ -24,6 +26,10 @@ app.use(getTransactions);
 app.use(getAverageDailySpend);
 app.use(getPredictedPayments);
 app.use(googleAuth);
+app.use(addBankAccounts);
+app.use(getAccountInfo);
+
+app.use(express.static('../../client/build'));
 
 const PORT = 3001 || process.env.PORT;
 app.listen(PORT, () => {

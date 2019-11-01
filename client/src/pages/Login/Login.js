@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
-import _ from 'lodash';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnalytics } from '@fortawesome/pro-light-svg-icons';
@@ -10,29 +9,37 @@ import { faAnalytics } from '@fortawesome/pro-light-svg-icons';
 import styles from './Login.style';
 import PageTemplate from '../../components/PageTemplate';
 import googleLogo from '../../assets/GoogleGLogo.svg';
-
+import { createCookie, getCookie } from '../../lib/cookieFunctions';
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+    
+        if(getCookie('snapshot_user_account') !== undefined) {
+            window.location.replace('/myAccounts');
+        }
+    }
+
     responseGoogle(response) {
         const postBody = {
             code: response.code
         }
 
-        axios.post('http://localhost:3001/googleOAuthTokenHandler', postBody)
+        axios.post('/googleOAuthTokenHandler', postBody)
             .then(response => {
-                window.localStorage.setItem('google_id', response.data.google_id);
-                if(window.localStorage.getItem('account_data') === null) {
-                    const accountData = {
-                        first_name: response.data.first_name,
-                        last_name: response.data.last_name,
-                        picture_uri: response.data.picture_uri,
-                        accounts: response.data.linked_bank_accounts
-                    }
+                const accountData = {
+                    first_name: response.data.first_name,
+                    last_name: response.data.last_name,
+                    picture_uri: response.data.picture_uri,
+                    google_id: response.data.google_id
+                } 
 
-                    window.localStorage.setItem('account_data', JSON.stringify(accountData));
-                    window.location.replace(response.data.redirect_url);
-                } else {
+                createCookie('snapshot_user_account', accountData);
+                
+                if(response.hasAccounts) {
                     window.location.replace('/myAccounts');
+                } else {
+                    window.location.replace(response.data.redirect_url);
                 }
             }).catch(e => {
                 console.log(e);
@@ -55,7 +62,7 @@ class Login extends Component {
                             render={renderProps => (
                                         <div className="loginButton" style={styles.loginWithGoogleButton} onClick={renderProps.onClick}>
                                             <div style={styles.googleBox}>
-                                                <img style={styles.googleLogo} src={googleLogo} />
+                                                <img style={styles.googleLogo} src={googleLogo} alt="google logo" />
                                             </div>
                                             <p style={styles.loginWith}>Login with Google</p>
                                         </div>)}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
 
+import { getCookie } from '../../lib/cookieFunctions';
 import styles from './TransactionCalendarHeatMap.style';
 import 'react-calendar-heatmap/dist/styles.css';
 
@@ -25,28 +26,32 @@ class TransactionCalendarHeatMap extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if(props.accountId !== state.accountId) {
+        if(state.accountIdNeeded && props.accountId !== state.accountId && props.accountId !== undefined) {
             return {
-                accountId: props.accountId
+                accountId: props.accountId,
+                accountIdNeeded: false
             }
         } else {
-            return state
+            return state;
         }
     }
 
+    callApiForTransactions(accountId, googleId) {
+        axios.get(`http://localhost:3001/transactions?accountId=${accountId}&google_id=${googleId}`)
+        .then(response => {
+            this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false});
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
     getTransactionData() {
-        const googleId = window.localStorage.getItem('google_id');
-        axios.get(`http://localhost:3001/transactions?accountId=${this.state.accountId}&google_id=${googleId}`)
-                .then(response => {
-                    console.log(response)
-                    this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false});
-                }).catch(e => {
-                    console.log(e);
-                });
+        const googleId = getCookie('snapshot_user_account').google_id;
+        this.callApiForTransactions(this.state.accountId, googleId);
     }
 
     componentDidUpdate() {
-        if(this.state.accountIdNeeded) {
+        if(!this.state.accountIdNeeded) {
            this.getTransactionData()
         }
     }

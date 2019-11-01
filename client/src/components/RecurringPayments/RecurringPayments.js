@@ -2,9 +2,65 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 
+import { getCookie } from '../../lib/cookieFunctions';
 import styles from './RecurringPayments.style';
 
 import LoadingAnimation from '../LoadingAnimation';
+
+class Payment extends Component {
+    render() {
+        return(
+            <div style={styles.paymentContainer} key={_.uniqueId('payment_s')}>
+                <div>
+                    <h4 style={styles.paymentLabel}>MERCHANT</h4>
+                    <h3 style={styles.paymentData}>{this.props.data.name_of_merchant}</h3>
+                </div>
+                <div style={styles.paymentStatistic}>
+                    <h4 style={styles.paymentLabel}>TOTAL PAYMENTS</h4>
+                    <h3 style={styles.paymentData}>{this.props.data.number_of_transactions}</h3>
+                </div>
+                <div style={styles.paymentStatistic}>
+                    <h4 style={styles.paymentLabel}>AVERAGE PAYMENT</h4>
+                    <h3 style={styles.paymentData}>£{this.props.data.average_amount_spent}</h3>
+                </div>
+                <div style={styles.paymentStatistic}>
+                    <h4 style={styles.paymentLabel}>AVERAGE INTERVAL</h4>
+                    <h3 style={styles.paymentData}>{this.props.data.average_interval} days</h3>
+                </div>
+                <div style={{ ...styles.totalSpent, ...styles.paymentStatistic }}>
+                    <h4 style={styles.paymentLabel}>TOTAL SPENT</h4>
+                    <h3 style={styles.paymentData}>£{this.props.data.total_amount_spent}</h3>
+                </div>
+            </div>
+        )
+    }
+}
+
+class PaymentObject extends Component {
+    render() {
+        if(Array.isArray(this.props.data)) {
+            return( 
+                <div style={styles.classificationContainer}>
+                    <h2 style={styles.classification}>{this.props.data[0].classification}</h2>
+                    <div style={styles.paymentsContainer}>
+                        {this.props.data.map(payment => {
+                            return (
+                                <Payment data={payment} key={_.uniqueId('payment_')} />
+                            )
+                        })}
+                    </div>
+                </div>
+            )
+        } else {
+            return(
+                <div style={styles.classificationContainer}>
+                    <h2 style={styles.classification}>{this.props.data.classification}</h2>
+                    <Payment data={this.props.data} />
+                </div>
+            )
+        }
+    }
+}
 
 class RecurringPayments extends Component {
     constructor(props) {
@@ -18,9 +74,10 @@ class RecurringPayments extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if(props.accountId !== state.accountId) {
+        if(state.accountIdNeeded && props.accountId !== state.accountId && props.accountId !== undefined) {
             return {
-                accountId: props.accountId
+                accountId: props.accountId,
+                accountIdNeeded: false
             }
         } else {
             return state
@@ -28,7 +85,7 @@ class RecurringPayments extends Component {
     }
 
     getPaymentData() {
-        const googleId = window.localStorage.getItem('google_id');
+        const googleId = getCookie('snapshot_user_account').google_id;
         axios.get(`http://localhost:3001/recurringPayments?accountId=${this.state.accountId}&google_id=${googleId}`)
             .then(response => {
                 const dataArray = [];
@@ -50,7 +107,7 @@ class RecurringPayments extends Component {
     }
 
     componentDidUpdate() {
-        if(this.state.accountIdNeeded) {
+        if(!this.state.accountIdNeeded) {
             this.getPaymentData();
         }
     }
@@ -60,55 +117,6 @@ class RecurringPayments extends Component {
             result[key] = mapFn(object[key], key)
             return result
         }, {})
-    }
-
-    populateMarkupForPayment(data) {
-        return(
-            <div style={styles.paymentContainer}>
-                <div>
-                    <h4 style={styles.paymentLabel}>MERCHANT</h4>
-                    <h3 style={styles.paymentData}>{data.name_of_merchant}</h3>
-                </div>
-                <div style={styles.paymentStatistic}>
-                    <h4 style={styles.paymentLabel}>TOTAL PAYMENTS</h4>
-                    <h3 style={styles.paymentData}>{data.number_of_transactions}</h3>
-                </div>
-                <div style={styles.paymentStatistic}>
-                    <h4 style={styles.paymentLabel}>AVERAGE PAYMENT</h4>
-                    <h3 style={styles.paymentData}>£{data.average_amount_spent}</h3>
-                </div>
-                <div style={styles.paymentStatistic}>
-                    <h4 style={styles.paymentLabel}>AVERAGE INTERVAL</h4>
-                    <h3 style={styles.paymentData}>{data.average_interval} days</h3>
-                </div>
-                <div style={{ ...styles.totalSpent, ...styles.paymentStatistic }}>
-                    <h4 style={styles.paymentLabel}>TOTAL SPENT</h4>
-                    <h3 style={styles.paymentData}>£{data.total_amount_spent}</h3>
-                </div>
-            </div>
-        )
-    }
-
-    createPaymentObject(data) {
-        if(Array.isArray(data)) {
-            return( 
-                <div style={styles.classificationContainer}>
-                    <h2 style={styles.classification}>{data[0].classification}</h2>
-                    <div style={styles.paymentsContainer}>
-                        {data.map(payment => {
-                            return this.populateMarkupForPayment(payment)
-                        })}
-                    </div>
-                </div>
-            )
-        } else {
-            return(
-                <div style={styles.classificationContainer}>
-                    <h2 style={styles.classification}>{data.classification}</h2>
-                    {this.populateMarkupForPayment(data)}
-                </div>
-            )
-        }
     }
     
     render() {
@@ -123,7 +131,9 @@ class RecurringPayments extends Component {
         return(
             <div style={styles.container}>
                 {this.state.paymentData.map((classification) => {
-                    return this.createPaymentObject(classification);
+                    return (
+                        <PaymentObject data={classification} key={_.uniqueId('classification_')} />
+                    )
                 })}
             </div>
         )

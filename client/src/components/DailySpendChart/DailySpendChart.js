@@ -4,6 +4,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import styles from './DailySpendChart.style';
+import { getCookie } from '../../lib/cookieFunctions';
 
 import LoadingAnimation from '../LoadingAnimation';
 
@@ -19,9 +20,10 @@ class DailySpendChart extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if(props.accountId !== state.accountId) {
+        if(state.accountIdNeeded && props.accountId !== state.accountId && props.accountId !== undefined) {
             return {
-                accountId: props.accountId
+                accountId: props.accountId,
+                accountIdNeeded: false
             }
         } else {
             return state
@@ -29,10 +31,9 @@ class DailySpendChart extends Component {
     }
 
     getDailySpendData() {
-        const googleId = window.localStorage.getItem('google_id');
+        const googleId = getCookie('snapshot_user_account').google_id;
         axios.get(`http://localhost:3001/averageSpendDaily?accountId=${this.state.accountId}&google_id=${googleId}`)
             .then(response => {
-                console.log(response.data);
                 this.setState({ dailySpendData: response.data, accountIdNeeded: false})
             }).catch(e => {
                 console.log("ERROR: ", e);
@@ -40,7 +41,7 @@ class DailySpendChart extends Component {
     }
 
     componentDidUpdate() {
-        if(this.state.accountIdNeeded) {
+        if(!this.state.accountIdNeeded) {
             this.getDailySpendData();
         }
     }

@@ -10,21 +10,8 @@ function checkIfUserExists(google_id) {
     });
 }
 
-function generateStateToken(data) {
-    const valuesArray = Object.values(data);
-    
-    const concatData = valuesArray.reduce((concatedValues, value) => {
-        return concatedValue.concat(value);
-    }, "");
-
-    const hashedData = shajs('sha512').update(concatData).digest('hex');
-
-    return hashedData;
-}
-
 async function saveNewUser(user_data) {
     const userBody = {
-        redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
         google_id: user_data.id,
         first_name: user_data.given_name,
         last_name: user_data.family_name,
@@ -39,10 +26,30 @@ async function saveNewUser(user_data) {
     const newUser = new Accounts(userBody);
 
     if(await checkIfUserExists(user_data.id)) {
-        return userBody;
+        return {
+            exists: true,
+            redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
+            first_name: userBody.first_name,
+            last_name: userBody.last_name,
+            picture_uri: userBody.picture_uri,
+            linked_bank_accounts: userBody.linked_bank_accounts,
+            google_id: userBody.google_id,
+            hasAccounts: !_.isEmpty(userBody.linked_bank_accounts)
+        };
     } else {
         return newUser.save()
-            .then(savedUser => savedUser._doc)
+            .then(savedUser => {
+                return {
+                    exists: false,
+                    redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
+                    first_name: savedUser._doc.first_name,
+                    last_name: savedUser._doc.last_name,
+                    picture_uri: savedUser._doc.picture_uri,
+                    linked_bank_accounts: savedUser._doc.linked_bank_accounts,
+                    google_id: savedUser._doc.google_id,
+                    hasAccounts: !_.isEmpty(savedUser._doc.linked_bank_accounts)
+                }
+            })
             .catch(e => e);
     }
 }

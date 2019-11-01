@@ -24,7 +24,7 @@ class Account extends Component {
         return(
             <div style={styles.container}>
                 <div style={styles.imageContainer}>
-                    <img style={styles.bankImage} src={this.props.bankImage}></img>
+                    <img style={styles.bankImage} src={this.props.bankImage} alt="bank logo"></img>
                 </div>
                 <div stlye={styles.detailsContainer}>
                     <h5 style={styles.bankName}>{this.props.bankName}</h5>

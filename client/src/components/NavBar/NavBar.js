@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnalytics } from '@fortawesome/pro-light-svg-icons';
 import styles from './NavBar.style';
 
+import { getCookie } from '../../lib/cookieFunctions';
 import googleLogo from '../../assets/googleLogo.svg';
 
 class NavBar extends Component {
@@ -17,13 +18,13 @@ class NavBar extends Component {
                     <div style={styles.loginContainer}>
                         <div class="loginButton" style={styles.loginButton}>
                             <h4 style={styles.loginButtonText}>Login with </h4>
-                            <img style={styles.googleLogo} src={googleLogo} />
+                            <img style={styles.googleLogo} src={googleLogo} alt="google logo"/>
                         </div>
                     </div>
                 </div>
             )
-        } else if(window.localStorage.getItem('account_data') !== null) {
-            const accountData = JSON.parse(window.localStorage.getItem('account_data'));
+        } else if(getCookie('snapshot_user_account') !== undefined) {
+            const accountData = getCookie('snapshot_user_account');
             return(
                 <div style={styles.navContainer}>
                     <div style={styles.logoContainer}>
@@ -32,7 +33,7 @@ class NavBar extends Component {
                     </div>
                     <div style={styles.profileContainer}>
                         <div style={styles.pictureContainer}>
-                            <img src={accountData.picture_uri} style={styles.avatar} />
+                            <img src={accountData.picture_uri} style={styles.avatar} alt="user avatar"/>
                         </div>
                         <div style={styles.nameContainer}>
                             <h3>{accountData.first_name}</h3>

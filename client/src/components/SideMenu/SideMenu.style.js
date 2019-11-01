@@ -1,6 +1,7 @@
 const styles = {
     container: {
-        width: '400px',
+        maxWidth: '400px',
+        width: '275px',
         height: '400px',
         backgroundColor: '#7a9e7e',
         borderRadius: '10px',
@@ -13,10 +14,22 @@ const styles = {
         alignItems: 'center',
         flexDirection: 'column',
         boxSizing: 'border-box',
-        padding: '20px 5px'
+        padding: '20px 20px'
     },
-    accountsIcon: {
-        color: '#7a9e7e'
+    selectedIcon: {
+        color: '#7A9E7E'
+    },
+    nonSelectedIcon: {
+        color: '#FFFFFF'
+    },
+    nonSelected: {
+        margin: '10px 0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '40px',
+        height: '40px',
+        color: '#FFF'
     },
     selected: {
         color: '#7a9e7e',
@@ -25,14 +38,10 @@ const styles = {
         padding: '10px',
         backgroundColor: '#fff',
         borderRadius: '50%',
-        marginBottom: '25px',
+        margin:'10px 0',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    transactionsIcon: {
-        color: '#fff',
-        marginBottom: '30px'
     }
 }
 

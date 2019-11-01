@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import qs from 'querystring';
 import _ from 'lodash';
+import { Element } from 'react-scroll';
+
+import { getCookie } from '../../lib/cookieFunctions';
 
 import Account from '../../components/Account';
 import TransactionCalendarHeatMap from '../../components/TransactionCalendarHeatMap';
@@ -17,48 +20,53 @@ class Home extends Component {
     constructor(props) {
         super(props);
 
-        console.log(qs.parse(props.location.search));
-
         this.state = {
             accounts: [],
             heatmap_account_id: "",
             tl_code: qs.parse(props.location.search)['?code'],
-            stored_accounts: JSON.parse(window.localStorage.getItem('account_data')).accounts
+            stored_accounts: []
         }
 
+        if(getCookie('snapshot_user_account') === undefined) {
+            window.location.replace('/login');
+        }
     }
     
     componentDidMount() {
+        const google_id = getCookie('snapshot_user_account').google_id;
+
         if(this.state.tl_code !== undefined) {
-            const google_id = window.localStorage.getItem('google_id');
-            const req_url = `http://localhost:3001/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
+            const req_url = `/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
+
             axios.get(req_url)
                 .then(response => {
-                    console.log(response);
                     this.loadAccounts(google_id);
                 }).catch(e => {
                     console.log(e);
                 });
+
         } else {
-            const google_id = window.localStorage.getItem('google_id');
             this.loadAccounts(google_id);
         }
     }
 
-    loadAccounts(google_id) {
-        if(_.isEmpty(this.state.stored_accounts)) {
-            axios.get(`http://localhost:3001/loadAccounts?google_id=${google_id}`)
-                .then(response => {
-                    const stored_accounts_object = JSON.parse(window.localStorage.getItem('account_data'));
-                    stored_accounts_object.accounts = response.data;
-                    window.localStorage.setItem('account_data', JSON.stringify(stored_accounts_object));
-                    this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
-                }).catch(e => {
-                    console.log(e.response.data);
-                });
-        } else {
-            this.setState({accounts: this.state.stored_accounts, heatmap_account_id: this.state.stored_accounts[0].accoundId})
+    componentDidUpdate() {
+        if(getCookie('snapshot_user_account') === undefined) {
+            window.location.replace('/login');
         }
+    }
+
+    getAccountInfo() {
+
+    }
+
+    loadAccounts(google_id) {
+        axios.get(`/loadAccounts?google_id=${google_id}`)
+            .then(response => {
+                this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
+            }).catch(e => {
+                console.log(e);
+            });
     }
 
     renderAccounts() {
@@ -80,6 +88,7 @@ class Home extends Component {
                                 sortCode={account.account_number.sort_code}
                                 accountNumber={account.account_number.number}
                                 balance={account.balance.current}
+                                key={_.uniqueId('account_')}
                             />
                         )
                     })}
@@ -94,6 +103,7 @@ class Home extends Component {
                 <SectionTitle 
                     title={"Accounts & Balance"}
                 />
+                <Element name="Accounts"></Element>
                 <BalanceDisplay
                     accounts={this.state.accounts}
                 />
@@ -101,18 +111,21 @@ class Home extends Component {
                 <SectionTitle 
                     title={"Transactions"}
                 />
+                <Element name="Transactions"></Element>
                 <TransactionCalendarHeatMap
                     accountId={this.state.heatmap_account_id}
                 />
                 <SectionTitle
                     title={"Average Daily Spend"}
                 />
-                <DailySpendChart 
+                <Element name="DailySpendChart"></Element>
+                <DailySpendChart
                     accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
                 />
                 <SectionTitle
                     title={"Repeated Payments"}
                 />
+                <Element name="RecurringPayments"></Element>
                 <RecurringPayments
                     accountId={this.state.accounts[0] !== undefined ? this.state.accounts[0].account_id : ""}
                 />

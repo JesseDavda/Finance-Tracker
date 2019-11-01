@@ -19,14 +19,13 @@ function objectMap(object, mapFn) {
 }
 
 async function callAPIForData(accountId, googleId ,from, to) {
+    debugger;
     const accessToken = await Accounts.findOne({google_id: googleId}).exec()
         .then(doc => {
             return doc.tl_access_token;
         }).catch(e => {
             console.log(e);
         });
-
-    debugger;
 
     const config = {
         headers: {
@@ -38,6 +37,7 @@ async function callAPIForData(accountId, googleId ,from, to) {
 }
 
 function getTransactionData(accountId, googleId ,from, to) {
+    debugger;
     return callAPIForData(accountId, googleId, from, to)
             .then(response => {
                 let collatedData = {};
@@ -54,9 +54,13 @@ function getTransactionData(accountId, googleId ,from, to) {
 
                 return collatedData;
             }).catch(async (e) => {
-                console.log(e.response.data)
-                await refreshAccessToken();
-                return getTransactionData(accountId, from, to);
+                console.log(e.response)
+                if(e.response.status === 401) {
+                    await refreshAccessToken(googleId);
+                    return getTransactionData(accountId, from, to);
+                } else {
+                    return e;
+                }
             })
 }
 
