@@ -25,6 +25,8 @@ class Login extends Component {
             code: response.code
         }
 
+        console.log("The response: ", response)
+
         axios.post('/googleOAuthTokenHandler', postBody)
             .then(response => {
                 const accountData = {

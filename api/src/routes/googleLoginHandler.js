@@ -11,6 +11,7 @@ router.post('/googleOAuthTokenHandler', (req, res) => {
     console.log(req.body);
     const code = req.body.code;
 
+    console.log("The process: ", process.env);
     console.log(process.env.GOOGLE_OAUTH_CLIENT_ID);
 
     const codeExchangeBody = {

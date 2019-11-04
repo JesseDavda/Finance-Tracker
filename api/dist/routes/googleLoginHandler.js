@@ -19,6 +19,7 @@ var GOOGLE_CODE_EXCHANGE_URL = 'https://oauth2.googleapis.com/token';
 router.post('/googleOAuthTokenHandler', function (req, res) {
   console.log(req.body);
   var code = req.body.code;
+  console.log("The process: ", process.env);
   console.log(process.env.GOOGLE_OAUTH_CLIENT_ID);
   var codeExchangeBody = {
     code: code,
