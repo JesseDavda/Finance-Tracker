@@ -56,10 +56,6 @@ class Home extends Component {
         }
     }
 
-    getAccountInfo() {
-
-    }
-
     loadAccounts(google_id) {
         axios.get(`/loadAccounts?google_id=${google_id}`)
             .then(response => {
@@ -77,6 +73,7 @@ class Home extends Component {
                 </div>
             )
         } else {
+            console.log(this.state.accounts)
             return(
                 <div style={styles.accountsContainer}>
                     {this.state.accounts.map(account => {
