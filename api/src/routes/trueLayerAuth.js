@@ -1,5 +1,5 @@
 import express from 'express';
-import qs from 'queryString';
+import qs from 'querystring';
 import axios from 'axios';
 
 import { Accounts } from '../db/mongo/models';
