@@ -7,7 +7,7 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
-var _queryString = _interopRequireDefault(require("queryString"));
+var _querystring = _interopRequireDefault(require("querystring"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -38,7 +38,7 @@ router.get('/getTrueLayerAccessToken', function (req, res) {
     }
   };
 
-  _axios["default"].post('https://auth.truelayer.com/connect/token', _queryString["default"].stringify(postObject), config).then(function (response) {
+  _axios["default"].post('https://auth.truelayer.com/connect/token', _querystring["default"].stringify(postObject), config).then(function (response) {
     var updateObject = {
       tl_access_token: response.data.access_token,
       tl_refresh_token: response.data.refresh_token
