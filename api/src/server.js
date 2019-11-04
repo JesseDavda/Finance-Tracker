@@ -4,6 +4,7 @@ import mongoose from './db/mongo/mongoDB.js';
 
 const app = express();
 
+app.use(express.static(__dirname + '../../client/build/index.html'));
 app.use(cors());
 app.use(express.json());
 
@@ -17,8 +18,6 @@ import getPredictedPayments from './routes/getPredictedPayments';
 import googleAuth from './routes/googleLoginHandler';
 import addBankAccounts from './routes/addBankAccounts';
 import getAccountInfo from './routes/getAccountInfo';
-
-app.use(express.static(__dirname + '../../client/build'));
 
 app.use(trueLayerAuth);
 app.use(refreshTLToken);
