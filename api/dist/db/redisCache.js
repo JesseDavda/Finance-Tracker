@@ -1,5 +1,5 @@
 "use strict";
 
-var _redis = _interopRequireDefault(require("redis"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _redis = _interopRequireDefault(require("redis"));

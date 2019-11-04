@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 var _express = _interopRequireDefault(require("express"));
 
 var _cors = _interopRequireDefault(require("cors"));
@@ -25,8 +27,6 @@ var _googleLoginHandler = _interopRequireDefault(require("./routes/googleLoginHa
 var _addBankAccounts = _interopRequireDefault(require("./routes/addBankAccounts"));
 
 var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());

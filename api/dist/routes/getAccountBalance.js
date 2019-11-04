@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -10,8 +12,6 @@ var _express = _interopRequireDefault(require("express"));
 var _axios = _interopRequireDefault(require("axios"));
 
 var _store = _interopRequireDefault(require("../lib/store"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var access_token = _store["default"].get('TRUE_LAYER_ACCESS_TOKEN');
 
