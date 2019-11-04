@@ -1,13 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from './db/mongo/mongoDB.js';
+import path from 'path';
+import serveStatic from 'serve-static';
 
 const app = express();
 
-console.log("This is the dirname: ", __dirname);
-app.use(express.static(__dirname + '../../client/build/index.html'));
 app.use(cors());
 app.use(express.json());
+
+app.use(serveStatic(path.join(__dirname, '../../client/build')));
 
 import trueLayerAuth from './routes/trueLayerAuth';
 import refreshTLToken from './routes/refreshTLToken';

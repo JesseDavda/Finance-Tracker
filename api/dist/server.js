@@ -6,7 +6,9 @@ var _express = _interopRequireDefault(require("express"));
 
 var _cors = _interopRequireDefault(require("cors"));
 
-var _mongoDB = _interopRequireDefault(require("./db/mongo/mongoDB.js"));
+var _path = _interopRequireDefault(require("path"));
+
+var _serveStatic = _interopRequireDefault(require("serve-static"));
 
 var _trueLayerAuth = _interopRequireDefault(require("./routes/trueLayerAuth"));
 
@@ -29,10 +31,9 @@ var _addBankAccounts = _interopRequireDefault(require("./routes/addBankAccounts"
 var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"));
 
 var app = (0, _express["default"])();
-console.log("This is the dirname: ", __dirname);
-app.use(_express["default"]["static"](__dirname + '../../client/build/index.html'));
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
+app.use((0, _serveStatic["default"])(_path["default"].join(__dirname, '../../client/build')));
 app.use(_trueLayerAuth["default"]);
 app.use(_refreshTLToken["default"]);
 app.use(_loadTLAccounts["default"]);
