@@ -9,10 +9,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/static', serveStatic(path.join(__dirname, '../../client/build/static')));
+app.use(express.static('../client/build'));
 // app.get('*', (req, res) => {
 //     res.sendFile('index.html', {root: path.join(__dirname, '../../client/build/')});
 // });
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log("Server listening on port: ", PORT);
+});
 
 import trueLayerAuth from './routes/trueLayerAuth';
 import refreshTLToken from './routes/refreshTLToken';
@@ -35,8 +40,3 @@ app.use(getPredictedPayments);
 app.use(googleAuth);
 app.use(addBankAccounts);
 app.use(getAccountInfo);
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log("Server listening on port: ", PORT);
-});
