@@ -29,6 +29,7 @@ var _addBankAccounts = _interopRequireDefault(require("./routes/addBankAccounts"
 var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"));
 
 var app = (0, _express["default"])();
+console.log("This is the dirname: ", __dirname);
 app.use(_express["default"]["static"](__dirname + '../../client/build/index.html'));
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());

@@ -4,6 +4,7 @@ import mongoose from './db/mongo/mongoDB.js';
 
 const app = express();
 
+console.log("This is the dirname: ", __dirname);
 app.use(express.static(__dirname + '../../client/build/index.html'));
 app.use(cors());
 app.use(express.json());
