@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 // import * as serviceWorker from './serviceWorker';
 
@@ -16,8 +16,9 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <Route path="/login" exact component={Login} />
-                <Route path="/myAccounts" exact component={Home} />
+                <Redirect exact from="/" to="Login" />
+                <Route name="Login" path="/login" exact component={Login} />
+                <Route name="myAccounts" path="/myAccounts" exact component={Home} />
             </Router>
         );
     }
