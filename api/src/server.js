@@ -9,6 +9,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use(serveStatic(path.join(__dirname, '../../client/build')));
+app.get('*', (req, res) => {
+    res.sendFile('index.html', {root: path.join(__dirname, '../../client/build/')});
+});
 
 import trueLayerAuth from './routes/trueLayerAuth';
 import refreshTLToken from './routes/refreshTLToken';
