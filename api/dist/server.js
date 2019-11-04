@@ -42,7 +42,7 @@ app.use(_googleLoginHandler["default"]);
 app.use(_addBankAccounts["default"]);
 app.use(_getAccountInfo["default"]);
 app.use(_express["default"]["static"]('../../client/build'));
-var PORT = 3001 || process.env.PORT;
+var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {
   console.log("Server listening on port: ", PORT);
 });

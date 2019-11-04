@@ -31,7 +31,7 @@ app.use(getAccountInfo);
 
 app.use(express.static('../../client/build'));
 
-const PORT = 3001 || process.env.PORT;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log("Server listening on port: ", PORT);
 });
