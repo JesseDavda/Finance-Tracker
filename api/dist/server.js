@@ -35,7 +35,7 @@ var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"))
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
-app.use('/static', _express["default"]["static"](_path["default"].join(__dirname, '../../client/build/static'))); // app.get('*', (req, res) => {
+app.use('/static', (0, _serveStatic["default"])(_path["default"].join(__dirname, '../../client/build/static'))); // app.get('*', (req, res) => {
 //     res.sendFile('index.html', {root: path.join(__dirname, '../../client/build/')});
 // });
 

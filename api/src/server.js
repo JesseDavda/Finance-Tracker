@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/static', express.static(path.join(__dirname, '../../client/build/static')));
+app.use('/static', serveStatic(path.join(__dirname, '../../client/build/static')));
 // app.get('*', (req, res) => {
 //     res.sendFile('index.html', {root: path.join(__dirname, '../../client/build/')});
 // });
