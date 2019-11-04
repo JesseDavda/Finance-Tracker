@@ -1,10 +1,10 @@
 # Build the client
 cd client
-yarn run build
+npm run build
 
 # Build the API
 cd ../api
-yarn run build
+npm run build
 
 # Back to root
 cd ..

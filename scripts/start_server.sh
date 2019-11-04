@@ -5,7 +5,7 @@ cd api
 
 # Fresh install of nodemodules
 rm -rf ./node_modules
-yarn install
+npm install
 
 # Run Server
-yarn run serve
+npm run serve
