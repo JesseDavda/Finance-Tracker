@@ -33,12 +33,11 @@ var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"))
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
-app.use((0, _serveStatic["default"])(_path["default"].join(__dirname, '../../client/build')));
-app.get('*', function (req, res) {
-  res.sendFile('index.html', {
-    root: _path["default"].join(__dirname, '../../client/build/')
-  });
-});
+app.use(_express["default"]["static"]('../../client/build')); // app.use('/static', serveStatic(path.join(__dirname, '../../client/build/static')));
+// app.get('*', (req, res) => {
+//     res.sendFile('index.html', {root: path.join(__dirname, '../../client/build/')});
+// });
+
 app.use(_trueLayerAuth["default"]);
 app.use(_refreshTLToken["default"]);
 app.use(_loadTLAccounts["default"]);
