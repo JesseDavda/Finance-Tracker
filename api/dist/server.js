@@ -31,6 +31,7 @@ var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"))
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
+app.use(_express["default"]["static"](__dirname + '../../client/build'));
 app.use(_trueLayerAuth["default"]);
 app.use(_refreshTLToken["default"]);
 app.use(_loadTLAccounts["default"]);
@@ -41,7 +42,6 @@ app.use(_getPredictedPayments["default"]);
 app.use(_googleLoginHandler["default"]);
 app.use(_addBankAccounts["default"]);
 app.use(_getAccountInfo["default"]);
-app.use(_express["default"]["static"]('../../client/build'));
 var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {
   console.log("Server listening on port: ", PORT);

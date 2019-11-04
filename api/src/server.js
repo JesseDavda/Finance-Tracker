@@ -18,6 +18,8 @@ import googleAuth from './routes/googleLoginHandler';
 import addBankAccounts from './routes/addBankAccounts';
 import getAccountInfo from './routes/getAccountInfo';
 
+app.use(express.static(__dirname + '../../client/build'));
+
 app.use(trueLayerAuth);
 app.use(refreshTLToken);
 app.use(loadTLAccounts);
@@ -28,8 +30,6 @@ app.use(getPredictedPayments);
 app.use(googleAuth);
 app.use(addBankAccounts);
 app.use(getAccountInfo);
-
-app.use(express.static('../../client/build'));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
