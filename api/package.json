@@ -5,7 +5,8 @@
   "author": "JesseDavda <jessedavda@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js",
+    "build": "babel src --out-dir dist",
+    "serve": "node dist/server.js",
     "startDev": "source .env.bash && nodemon --exec babel-node src/server.js",
     "startDebug": "source .env.bash && nodemon --inspect-brk --exec babel-node src/server.js"
   },

@@ -6,28 +6,7 @@
   "author": "JesseDavda <jessepilot@live.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node api/src/server.js",
-    "startDev": "source .env.bash && nodemon --exec babel-node src/server.js",
-    "startDebug": "source .env.bash && nodemon --inspect-brk --exec babel-node src/server.js"
-  },
-  "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.5.5",
-    "@babel/polyfill": "^7.4.4",
-    "@babel/runtime": "^7.5.5",
-    "axios": "^0.19.0",
-    "cors": "^2.8.5",
-    "data-store": "^3.1.0",
-    "express": "^4.17.1",
-    "lodash": "^4.17.15",
-    "moment": "^2.24.0",
-    "mongoose": "^5.7.1",
-    "querystring": "^0.2.0",
-    "redis": "^2.8.0",
-    "sha.js": "^2.4.11",
-    "nodemon": "^1.19.4",
-    "@babel/node": "^7.5.5",
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5"
+    "start": "bash ./scripts/start_server.sh",
+    "build": "bash ./scripts/build.sh"
   }
 }

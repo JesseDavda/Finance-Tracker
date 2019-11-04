@@ -1,0 +1,112 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.storeUserInfo = storeUserInfo;
+
+var _lodash = _interopRequireDefault(require("lodash"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _sha = _interopRequireDefault(require("sha.js"));
+
+var _models = require("../db/mongo/models");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function checkIfUserExists(google_id) {
+  return _models.Accounts.findOne({
+    google_id: google_id
+  }).then(function (data) {
+    return _lodash["default"].isEmpty(data) ? false : true;
+  });
+}
+
+function saveNewUser(_x) {
+  return _saveNewUser.apply(this, arguments);
+}
+
+function _saveNewUser() {
+  _saveNewUser = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee(user_data) {
+    var userBody, newUser;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            userBody = {
+              google_id: user_data.id,
+              first_name: user_data.given_name,
+              last_name: user_data.family_name,
+              email: user_data.email,
+              picture_uri: user_data.picture,
+              linked_bank_accounts: [],
+              tl_access_token: "",
+              tl_refresh_token: "",
+              cookie_key: ""
+            };
+            newUser = new _models.Accounts(userBody);
+            _context.next = 4;
+            return checkIfUserExists(user_data.id);
+
+          case 4:
+            if (!_context.sent) {
+              _context.next = 8;
+              break;
+            }
+
+            return _context.abrupt("return", {
+              exists: true,
+              redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
+              first_name: userBody.first_name,
+              last_name: userBody.last_name,
+              picture_uri: userBody.picture_uri,
+              linked_bank_accounts: userBody.linked_bank_accounts,
+              google_id: userBody.google_id,
+              hasAccounts: !_lodash["default"].isEmpty(userBody.linked_bank_accounts)
+            });
+
+          case 8:
+            return _context.abrupt("return", newUser.save().then(function (savedUser) {
+              return {
+                exists: false,
+                redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
+                first_name: savedUser._doc.first_name,
+                last_name: savedUser._doc.last_name,
+                picture_uri: savedUser._doc.picture_uri,
+                linked_bank_accounts: savedUser._doc.linked_bank_accounts,
+                google_id: savedUser._doc.google_id,
+                hasAccounts: !_lodash["default"].isEmpty(savedUser._doc.linked_bank_accounts)
+              };
+            })["catch"](function (e) {
+              return e;
+            }));
+
+          case 9:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _saveNewUser.apply(this, arguments);
+}
+
+function storeUserInfo(access_token) {
+  var config = {
+    headers: {
+      'Authorization': "Bearer ".concat(access_token)
+    }
+  };
+  return _axios["default"].get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', config).then(function (response) {
+    return saveNewUser(response.data);
+  })["catch"](function (e) {
+    return e.response.data;
+  });
+}
