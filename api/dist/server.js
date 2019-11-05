@@ -42,12 +42,10 @@ app.use(_express["default"].json()); // function getAssetPath() {
 //     return path.join(__dirname, "../client/build/static");
 // }
 
-app.use(_express["default"]["static"]('../client/build'));
-app.use('/*', function (req, res) {
-  res.sendFile('index.html', {
-    root: _path["default"].join(__dirname, '../client/build')
-  });
-}); // app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
+app.use(_express["default"]["static"]('../client/build')); // app.use('/*', (req, res) => {
+//     res.sendFile('index.html', {root: path.join(__dirname, '../client/build')});
+// });
+// app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
 // app.get('/', (req, res) => {
 //     res.sendFile(path.resolve(getAssetPath(), `${FinanceTracker.getRedirectName()}.html`), {etag:false});
 // });
@@ -63,13 +61,13 @@ var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {
   console.log("Server listening on port: ", PORT);
 });
-app.use('/api/', _trueLayerAuth["default"]);
-app.use('/api/', _refreshTLToken["default"]);
-app.use('/api/', _loadTLAccounts["default"]);
-app.use('/api/', _getAccountBalance["default"]);
-app.use('/api/', _getTransactions["default"]);
-app.use('/api/', _getAverageDailySpend["default"]);
-app.use('/api/', _getPredictedPayments["default"]);
-app.use('/api/', _googleLoginHandler["default"]);
-app.use('/api/', _addBankAccounts["default"]);
-app.use('/api/', _getAccountInfo["default"]);
+app.use(_trueLayerAuth["default"]);
+app.use(_refreshTLToken["default"]);
+app.use(_loadTLAccounts["default"]);
+app.use(_getAccountBalance["default"]);
+app.use(_getTransactions["default"]);
+app.use(_getAverageDailySpend["default"]);
+app.use(_getPredictedPayments["default"]);
+app.use(_googleLoginHandler["default"]);
+app.use(_addBankAccounts["default"]);
+app.use(_getAccountInfo["default"]);

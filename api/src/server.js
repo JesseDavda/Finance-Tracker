@@ -15,9 +15,9 @@ app.use(express.json());
 // }
  
 app.use(express.static('../client/build'));
-app.use('/*', (req, res) => {
-    res.sendFile('index.html', {root: path.join(__dirname, '../client/build')});
-});
+// app.use('/*', (req, res) => {
+//     res.sendFile('index.html', {root: path.join(__dirname, '../client/build')});
+// });
 // app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
 // app.get('/', (req, res) => {
 //     res.sendFile(path.resolve(getAssetPath(), `${FinanceTracker.getRedirectName()}.html`), {etag:false});
@@ -47,13 +47,13 @@ import googleAuth from './routes/googleLoginHandler';
 import addBankAccounts from './routes/addBankAccounts';
 import getAccountInfo from './routes/getAccountInfo';
 
-app.use('/api/', trueLayerAuth);
-app.use('/api/', refreshTLToken);
-app.use('/api/', loadTLAccounts);
-app.use('/api/', getAccountBalance);
-app.use('/api/', getTransactions);
-app.use('/api/', getAverageDailySpend);
-app.use('/api/', getPredictedPayments);
-app.use('/api/', googleAuth);
-app.use('/api/', addBankAccounts);
-app.use('/api/', getAccountInfo);
+app.use(trueLayerAuth);
+app.use(refreshTLToken);
+app.use(loadTLAccounts);
+app.use(getAccountBalance);
+app.use(getTransactions);
+app.use(getAverageDailySpend);
+app.use(getPredictedPayments);
+app.use(googleAuth);
+app.use(addBankAccounts);
+app.use(getAccountInfo);
