@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import mongoose from './db/mongo/mongoDB';
+import * as FinanceTracker from './config/spa.config';
 import fallback from 'express-history-api-fallback';
 
 const app = express();
@@ -9,11 +10,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+function getAssetPath() {
+    return path.join(__dirname, "../client/build/static");
+}
+ 
 app.use(express.static('../client/build'));
-app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
-// app.get('*', (req, res) => {
-//     res.sendFile('index.html', {root: path.join(__dirname, '../client/build/')});
-// });
+// app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(getAssetPath(), `${FinanceTracker.getRedirectName()}.html`), {etag:false});
+});
+
+app.get('/:entryPoint', (req, res) => {
+    if(req.params.entryPoint === FinanceTracker.getEntryPoint) {
+        res.sendFile(path.resolve(getAssetPath(), req.params.entryPoint), {etag: false});
+    } else {
+        res.redirect(303, '/')
+    }
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

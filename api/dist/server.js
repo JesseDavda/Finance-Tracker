@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 var _express = _interopRequireDefault(require("express"));
@@ -9,6 +11,8 @@ var _cors = _interopRequireDefault(require("cors"));
 var _path = _interopRequireDefault(require("path"));
 
 var _mongoDB = _interopRequireDefault(require("./db/mongo/mongoDB"));
+
+var FinanceTracker = _interopRequireWildcard(require("./config/spa.config"));
 
 var _expressHistoryApiFallback = _interopRequireDefault(require("express-history-api-fallback"));
 
@@ -35,13 +39,27 @@ var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"))
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
-app.use(_express["default"]["static"]('../client/build'));
-app.use((0, _expressHistoryApiFallback["default"])('index.html', {
-  root: _path["default"].join(__dirname, '../client/build')
-})); // app.get('*', (req, res) => {
-//     res.sendFile('index.html', {root: path.join(__dirname, '../client/build/')});
-// });
 
+function getAssetPath() {
+  return _path["default"].join(__dirname, "../client/build/static");
+}
+
+app.use(_express["default"]["static"]('../client/build')); // app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
+
+app.get('/', function (req, res) {
+  res.sendFile(_path["default"].resolve(getAssetPath(), "".concat(FinanceTracker.getRedirectName(), ".html")), {
+    etag: false
+  });
+});
+app.get('/:entryPoint', function (req, res) {
+  if (req.params.entryPoint === FinanceTracker.getEntryPoint) {
+    res.sendFile(_path["default"].resolve(getAssetPath(), req.params.entryPoint), {
+      etag: false
+    });
+  } else {
+    res.redirect(303, '/');
+  }
+});
 var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {
   console.log("Server listening on port: ", PORT);
