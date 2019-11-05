@@ -10,7 +10,7 @@ var _path = _interopRequireDefault(require("path"));
 
 var _mongoDB = _interopRequireDefault(require("./db/mongo/mongoDB"));
 
-var _serveStatic = _interopRequireDefault(require("serve-static"));
+var _expressHistoryApiFallback = _interopRequireDefault(require("express-history-api-fallback"));
 
 var _trueLayerAuth = _interopRequireDefault(require("./routes/trueLayerAuth"));
 
@@ -35,8 +35,9 @@ var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"))
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
-app.use(_express["default"]["static"]('../client/build')); // app.get('*', (req, res) => {
-//     res.sendFile('index.html', {root: path.join(__dirname, '../../client/build/')});
+app.use(_express["default"]["static"]('../client/build'));
+app.use((0, _expressHistoryApiFallback["default"])(_path["default"].join(__dirname, '../client/build'))); // app.get('*', (req, res) => {
+//     res.sendFile('index.html', {root: path.join(__dirname, '../client/build/')});
 // });
 
 var PORT = process.env.PORT || 3001;

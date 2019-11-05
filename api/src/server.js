@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import mongoose from './db/mongo/mongoDB';
-import serveStatic from 'serve-static';
+import fallback from 'express-history-api-fallback';
 
 const app = express();
 
@@ -10,8 +10,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.static('../client/build'));
+app.use(fallback(path.join(__dirname, '../client/build')));
 // app.get('*', (req, res) => {
-//     res.sendFile('index.html', {root: path.join(__dirname, '../../client/build/')});
+//     res.sendFile('index.html', {root: path.join(__dirname, '../client/build/')});
 // });
 
 const PORT = process.env.PORT || 3001;
