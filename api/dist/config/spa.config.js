@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 
 var ConfiguredSPAs = function ConfiguredSPAs() {
-  function SPA() {
+  function SPA(params) {
     this.params = params;
   }
 

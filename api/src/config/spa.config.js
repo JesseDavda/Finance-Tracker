@@ -1,5 +1,5 @@
 const ConfiguredSPAs = () => {
-    function SPA() {
+    function SPA(params) {
         this.params = params;
     }
 
