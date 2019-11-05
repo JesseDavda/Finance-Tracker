@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Change into API dir
-cd api
+cd ./api
 
 # Fresh install of nodemodules
 rm -rf ./node_modules
