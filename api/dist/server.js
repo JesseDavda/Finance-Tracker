@@ -38,39 +38,38 @@ var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"))
 
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
-app.use(_express["default"].json());
+app.use(_express["default"].json()); // function getAssetPath() {
+//     return path.join(__dirname, "../client/build/static");
+// }
 
-function getAssetPath() {
-  return _path["default"].join(__dirname, "../client/build/static");
-}
-
-app.use(_express["default"]["static"]('../client/build')); // app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
-
-app.get('/', function (req, res) {
-  res.sendFile(_path["default"].resolve(getAssetPath(), "".concat(FinanceTracker.getRedirectName(), ".html")), {
-    etag: false
+app.use(_express["default"]["static"]('../client/build'));
+app.use('/*', function (req, res) {
+  res.sendFile('index.html', {
+    root: _path["default"].join(__dirname, '../client/build')
   });
-});
-app.get('/:entryPoint', function (req, res) {
-  if (req.params.entryPoint.toLowerCase() === 'myaccounts' || req.params.entryPoint.toLowerCase() === "login") {
-    res.sendFile(_path["default"].resolve(getAssetPath(), req.params.entryPoint), {
-      etag: false
-    });
-  } else {
-    res.redirect(303, '/');
-  }
-});
+}); // app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
+// app.get('/', (req, res) => {
+//     res.sendFile(path.resolve(getAssetPath(), `${FinanceTracker.getRedirectName()}.html`), {etag:false});
+// });
+// app.get('/:entryPoint', (req, res) => {
+//     if(req.params.entryPoint.toLowerCase() === 'myaccounts' || req.params.entryPoint.toLowerCase() === "login") {
+//         res.sendFile(path.resolve(getAssetPath(), req.params.entryPoint), {etag: false});
+//     } else {
+//         res.redirect(303, '/')
+//     }
+// });
+
 var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {
   console.log("Server listening on port: ", PORT);
 });
-app.use(_trueLayerAuth["default"]);
-app.use(_refreshTLToken["default"]);
-app.use(_loadTLAccounts["default"]);
-app.use(_getAccountBalance["default"]);
-app.use(_getTransactions["default"]);
-app.use(_getAverageDailySpend["default"]);
-app.use(_getPredictedPayments["default"]);
-app.use(_googleLoginHandler["default"]);
-app.use(_addBankAccounts["default"]);
-app.use(_getAccountInfo["default"]);
+app.use('/api/', _trueLayerAuth["default"]);
+app.use('/api/', _refreshTLToken["default"]);
+app.use('/api/', _loadTLAccounts["default"]);
+app.use('/api/', _getAccountBalance["default"]);
+app.use('/api/', _getTransactions["default"]);
+app.use('/api/', _getAverageDailySpend["default"]);
+app.use('/api/', _getPredictedPayments["default"]);
+app.use('/api/', _googleLoginHandler["default"]);
+app.use('/api/', _addBankAccounts["default"]);
+app.use('/api/', _getAccountInfo["default"]);

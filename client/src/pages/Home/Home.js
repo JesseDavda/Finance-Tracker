@@ -36,7 +36,7 @@ class Home extends Component {
         const google_id = getCookie('snapshot_user_account').google_id;
 
         if(this.state.tl_code !== undefined) {
-            const req_url = `/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
+            const req_url = `/api/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
 
             axios.get(req_url)
                 .then(response => {
@@ -57,7 +57,7 @@ class Home extends Component {
     }
 
     loadAccounts(google_id) {
-        axios.get(`/loadAccounts?google_id=${google_id}`)
+        axios.get(`/api/loadAccounts?google_id=${google_id}`)
             .then(response => {
                 this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
             }).catch(e => {

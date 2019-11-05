@@ -10,23 +10,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-function getAssetPath() {
-    return path.join(__dirname, "../client/build/static");
-}
+// function getAssetPath() {
+//     return path.join(__dirname, "../client/build/static");
+// }
  
 app.use(express.static('../client/build'));
+app.use('/*', (req, res) => {
+    res.sendFile('index.html', {root: path.join(__dirname, '../client/build')});
+});
 // app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
-app.get('/', (req, res) => {
-    res.sendFile(path.resolve(getAssetPath(), `${FinanceTracker.getRedirectName()}.html`), {etag:false});
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.resolve(getAssetPath(), `${FinanceTracker.getRedirectName()}.html`), {etag:false});
+// });
 
-app.get('/:entryPoint', (req, res) => {
-    if(req.params.entryPoint.toLowerCase() === 'myaccounts' || req.params.entryPoint.toLowerCase() === "login") {
-        res.sendFile(path.resolve(getAssetPath(), req.params.entryPoint), {etag: false});
-    } else {
-        res.redirect(303, '/')
-    }
-});
+// app.get('/:entryPoint', (req, res) => {
+//     if(req.params.entryPoint.toLowerCase() === 'myaccounts' || req.params.entryPoint.toLowerCase() === "login") {
+//         res.sendFile(path.resolve(getAssetPath(), req.params.entryPoint), {etag: false});
+//     } else {
+//         res.redirect(303, '/')
+//     }
+// });
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
@@ -44,13 +47,13 @@ import googleAuth from './routes/googleLoginHandler';
 import addBankAccounts from './routes/addBankAccounts';
 import getAccountInfo from './routes/getAccountInfo';
 
-app.use(trueLayerAuth);
-app.use(refreshTLToken);
-app.use(loadTLAccounts);
-app.use(getAccountBalance);
-app.use(getTransactions);
-app.use(getAverageDailySpend);
-app.use(getPredictedPayments);
-app.use(googleAuth);
-app.use(addBankAccounts);
-app.use(getAccountInfo);
+app.use('/api/', trueLayerAuth);
+app.use('/api/', refreshTLToken);
+app.use('/api/', loadTLAccounts);
+app.use('/api/', getAccountBalance);
+app.use('/api/', getTransactions);
+app.use('/api/', getAverageDailySpend);
+app.use('/api/', getPredictedPayments);
+app.use('/api/', googleAuth);
+app.use('/api/', addBankAccounts);
+app.use('/api/', getAccountInfo);
