@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:entryPoint', (req, res) => {
-    if(req.params.entryPoint === FinanceTracker.getEntryPoint) {
+    if(req.params.entryPoint.toLowerCase() === 'myaccounts' || req.params.entryPoint.toLowerCase() === "login") {
         res.sendFile(path.resolve(getAssetPath(), req.params.entryPoint), {etag: false});
     } else {
         res.redirect(303, '/')

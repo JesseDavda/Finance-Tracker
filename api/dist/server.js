@@ -52,7 +52,7 @@ app.get('/', function (req, res) {
   });
 });
 app.get('/:entryPoint', function (req, res) {
-  if (req.params.entryPoint === FinanceTracker.getEntryPoint) {
+  if (req.params.entryPoint.toLowerCase() === 'myaccounts' || req.params.entryPoint.toLowerCase() === "login") {
     res.sendFile(_path["default"].resolve(getAssetPath(), req.params.entryPoint), {
       etag: false
     });
