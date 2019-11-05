@@ -36,7 +36,9 @@ var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
 app.use(_express["default"]["static"]('../client/build'));
-app.use((0, _expressHistoryApiFallback["default"])(_path["default"].join(__dirname, '../client/build'))); // app.get('*', (req, res) => {
+app.use((0, _expressHistoryApiFallback["default"])('index.html', {
+  root: _path["default"].join(__dirname, '../client/build')
+})); // app.get('*', (req, res) => {
 //     res.sendFile('index.html', {root: path.join(__dirname, '../client/build/')});
 // });
 

@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.static('../client/build'));
-app.use(fallback(path.join(__dirname, '../client/build')));
+app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
 // app.get('*', (req, res) => {
 //     res.sendFile('index.html', {root: path.join(__dirname, '../client/build/')});
 // });
