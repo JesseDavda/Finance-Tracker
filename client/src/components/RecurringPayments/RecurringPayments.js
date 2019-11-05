@@ -86,7 +86,7 @@ class RecurringPayments extends Component {
 
     getPaymentData() {
         const googleId = getCookie('snapshot_user_account').google_id;
-        axios.get(`/api/recurringPayments?accountId=${this.state.accountId}&google_id=${googleId}`)
+        axios.get(`/recurringPayments?accountId=${this.state.accountId}&google_id=${googleId}`)
             .then(response => {
                 const dataArray = [];
                 

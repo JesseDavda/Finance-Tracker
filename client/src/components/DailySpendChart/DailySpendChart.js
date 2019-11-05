@@ -32,7 +32,7 @@ class DailySpendChart extends Component {
 
     getDailySpendData() {
         const googleId = getCookie('snapshot_user_account').google_id;
-        axios.get(`/api/averageSpendDaily?accountId=${this.state.accountId}&google_id=${googleId}`)
+        axios.get(`/averageSpendDaily?accountId=${this.state.accountId}&google_id=${googleId}`)
             .then(response => {
                 this.setState({ dailySpendData: response.data, accountIdNeeded: false})
             }).catch(e => {

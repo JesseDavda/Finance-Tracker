@@ -37,7 +37,7 @@ class TransactionCalendarHeatMap extends Component {
     }
 
     callApiForTransactions(accountId, googleId) {
-        axios.get(`/api/transactions?accountId=${accountId}&google_id=${googleId}`)
+        axios.get(`/transactions?accountId=${accountId}&google_id=${googleId}`)
         .then(response => {
             this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false});
         }).catch(e => {
