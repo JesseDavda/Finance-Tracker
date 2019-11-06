@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // import * as serviceWorker from './serviceWorker';
 
@@ -15,11 +15,12 @@ import './index.css';
 class App extends Component {
     render() {
         return (
-            <Router>
-                <Route name="Landing" path="/" exact component={Login} />
-                <Route name="Login" path="/login" exact component={Login} />
-                <Route name="MyAccounts" path="/myAccounts" exact component={Home} />
-            </Router>
+            <Switch>
+                <Route name="Landing" path="/" exact component={Home} />
+                <Route name="Login" path="/login" component={Login} />
+                <Route name="MyAccounts" path="/myAccounts" component={Home} />
+                <Route component={Home} />
+            </Switch>
         );
     }
 }

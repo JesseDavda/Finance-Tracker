@@ -10,26 +10,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// function getAssetPath() {
-//     return path.join(__dirname, "../client/build/static");
-// }
+function getAssetPath() {
+    return path.join(__dirname, "../client/build/static");
+}
  
 app.use(express.static('../client/build'));
-// app.use('/*', (req, res) => {
-//     res.sendFile('index.html', {root: path.join(__dirname, '../client/build')});
-// });
-// app.use(fallback('index.html', {root: path.join(__dirname, '../client/build')}));
-// app.get('/', (req, res) => {
-//     res.sendFile(path.resolve(getAssetPath(), `${FinanceTracker.getRedirectName()}.html`), {etag:false});
-// });
-
-// app.get('/:entryPoint', (req, res) => {
-//     if(req.params.entryPoint.toLowerCase() === 'myaccounts' || req.params.entryPoint.toLowerCase() === "login") {
-//         res.sendFile(path.resolve(getAssetPath(), req.params.entryPoint), {etag: false});
-//     } else {
-//         res.redirect(303, '/')
-//     }
-// });
+app.get('/', (req, res) => {
+    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false}).end();
+});
+app.get('/login', (req, res) => {
+    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false}).end();
+});
+app.get('/myAccounts', (req, res) => {
+    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false}).end();
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

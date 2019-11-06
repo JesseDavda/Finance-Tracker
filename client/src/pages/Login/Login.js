@@ -16,7 +16,7 @@ class Login extends Component {
         super(props);
     
         if(getCookie('snapshot_user_account') !== undefined) {
-            window.location.replace('/myAccounts');
+            window.history.push('/myAccounts');
         }
     }
 
@@ -39,9 +39,9 @@ class Login extends Component {
                 createCookie('snapshot_user_account', accountData);
                 
                 if(response.hasAccounts) {
-                    window.location.replace('/myAccounts');
+                    window.history.push('/myAccounts');
                 } else {
-                    window.location.replace(response.data.redirect_url);
+                    window.history.push(response.data.redirect_url);
                 }
             }).catch(e => {
                 console.log(e);

@@ -28,7 +28,12 @@ class Home extends Component {
         }
 
         if(getCookie('snapshot_user_account') === undefined) {
-            window.location.replace('/login');
+            // axios.get(`/validateUser?google_id=${getCookie('snapshot_user_account')}`).then(response => {
+            //     response.valid
+            //         ? true
+            //         : window.history.push('/login');
+            // })
+            window.history.push('/login');
         }
     }
     
@@ -52,7 +57,7 @@ class Home extends Component {
 
     componentDidUpdate() {
         if(getCookie('snapshot_user_account') === undefined) {
-            window.location.replace('/login');
+            window.history.push('/login');
         }
     }
 

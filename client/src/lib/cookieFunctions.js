@@ -1,5 +1,6 @@
 import Cookies from 'universal-cookie';
 import moment from 'moment';
+import axios from 'axios';
 
 const Cookie = new Cookies();
 
@@ -17,6 +18,18 @@ function createCookie(name, value, options) {
     Object.assign(defaultOptions, options);
 
     Cookie.set(name, value, {...defaultOptions});
+}
+
+async function checkUser(name) {
+    const cookie = Cookie.get(name);
+
+    if(cookie !== undefined) {
+        return await axios.get(`/validateUser?googleId=${cookie.google_id}`)
+        .then((response) => response.data.valid)
+        .catch(e => false);
+    } else {
+        return false
+    }
 }
 
 function getCookie(name) {
