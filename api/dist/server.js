@@ -48,17 +48,17 @@ app.use(_express["default"]["static"]('../client/build'));
 app.get('/', function (req, res) {
   res.status(200).sendFile(_path["default"].resolve(getAssetPath(), 'index.html'), {
     etag: false
-  }).end();
+  });
 });
 app.get('/login', function (req, res) {
   res.status(200).sendFile(_path["default"].resolve(getAssetPath(), 'index.html'), {
     etag: false
-  }).end();
+  });
 });
 app.get('/myAccounts', function (req, res) {
   res.status(200).sendFile(_path["default"].resolve(getAssetPath(), 'index.html'), {
     etag: false
-  }).end();
+  });
 });
 var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {

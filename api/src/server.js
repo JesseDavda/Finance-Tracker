@@ -16,13 +16,13 @@ function getAssetPath() {
  
 app.use(express.static('../client/build'));
 app.get('/', (req, res) => {
-    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false}).end();
+    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false});
 });
 app.get('/login', (req, res) => {
-    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false}).end();
+    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false});
 });
 app.get('/myAccounts', (req, res) => {
-    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false}).end();
+    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false});
 });
 
 const PORT = process.env.PORT || 3001;
