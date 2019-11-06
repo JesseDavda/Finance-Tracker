@@ -15,12 +15,14 @@ import './index.css';
 class App extends Component {
     render() {
         return (
-            <Switch>
-                <Route name="Landing" path="/" exact component={Home} />
-                <Route name="Login" path="/login" component={Login} />
-                <Route name="MyAccounts" path="/myAccounts" component={Home} />
-                <Route component={Home} />
-            </Switch>
+            <Router>
+                <Switch>
+                    <Route name="Landing" path="/" exact component={Home} />
+                    <Route name="Login" path="/login" component={Login} />
+                    <Route name="MyAccounts" path="/myAccounts" component={Home} />
+                    <Route component={Home} />
+                </Switch>
+            </Router>
         );
     }
 }

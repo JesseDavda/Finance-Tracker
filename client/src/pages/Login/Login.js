@@ -38,7 +38,7 @@ class Login extends Component {
 
                 createCookie('snapshot_user_account', accountData);
                 
-                if(response.hasAccounts) {
+                if(response.data.exists) {
                     window.history.push('/myAccounts');
                 } else {
                     window.history.push(response.data.redirect_url);
