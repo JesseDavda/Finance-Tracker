@@ -32,12 +32,13 @@ async function getBalances(accounts, access_token) {
 }
 
 async function callForAccounts(googleId) {
+    console.log("This is the google id: ", googleId);
     const accessToken = await Accounts.findOne({google_id: googleId}).exec()
         .then(doc => {
-            return doc.tl_access_token;
+            return doc === null ? doc : doc.tl_access_token;
         }).catch(e => {
             console.log(e);
-        })
+        });
 
     const config = {
         headers: {
@@ -45,13 +46,17 @@ async function callForAccounts(googleId) {
         }
     }
     
-    return axios.get('https://api.truelayer.com/data/v1/accounts', config)
-            .then(response => {
-                return getBalances(response.data.results, accessToken).then(res => res)
-            }).catch(async e => {
-                await refreshAccessToken(googleId);
-                return callForAccounts();
-            });
+    if(accessToken === null) {
+        return axios.get('https://api.truelayer.com/data/v1/accounts', config)
+                .then(response => {
+                    return getBalances(response.data.results, accessToken).then(res => res)
+                }).catch(async e => {
+                    await refreshAccessToken(googleId);
+                    return callForAccounts();
+                });
+    } else {
+        return false;
+    }
 }
 
 async function addAccounts(googleId, accounts) {

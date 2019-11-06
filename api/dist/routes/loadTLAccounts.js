@@ -85,22 +85,29 @@ function _callForAccounts() {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.next = 2;
+            console.log("This is the google id: ", googleId);
+            _context4.next = 3;
             return _models.Accounts.findOne({
               google_id: googleId
             }).exec().then(function (doc) {
-              return doc.tl_access_token;
+              return doc === null ? doc : doc.tl_access_token;
             })["catch"](function (e) {
               console.log(e);
             });
 
-          case 2:
+          case 3:
             accessToken = _context4.sent;
             config = {
               headers: {
                 "Authorization": "Bearer ".concat(accessToken)
               }
             };
+
+            if (!(accessToken === null)) {
+              _context4.next = 9;
+              break;
+            }
+
             return _context4.abrupt("return", _axios["default"].get('https://api.truelayer.com/data/v1/accounts', config).then(function (response) {
               return getBalances(response.data.results, accessToken).then(function (res) {
                 return res;
@@ -134,7 +141,10 @@ function _callForAccounts() {
               };
             }()));
 
-          case 5:
+          case 9:
+            return _context4.abrupt("return", false);
+
+          case 10:
           case "end":
             return _context4.stop();
         }
