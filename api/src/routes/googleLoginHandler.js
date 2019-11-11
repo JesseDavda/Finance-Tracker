@@ -22,9 +22,10 @@ router.post('/googleOAuthTokenHandler', (req, res) => {
 
     axios.post(GOOGLE_CODE_EXCHANGE_URL, codeExchangeBody)
         .then(response => {
-
+            console.log(reponse.data);
             storeUserInfo(response.data.access_token)
                 .then(data => {
+                    console.log(data);
                     res.status(200).json(data).end();
                 }).catch(e => {
                     res.status(500).json(e.response.data).end();
