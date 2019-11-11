@@ -3,6 +3,7 @@ import axios from 'axios';
 import qs from 'querystring';
 import _ from 'lodash';
 import { Element } from 'react-scroll';
+import { Redirect } from 'react-router-dom';
 
 import { getCookie } from '../../lib/cookieFunctions';
 
@@ -24,16 +25,18 @@ class Home extends Component {
             accounts: [],
             heatmap_account_id: "",
             tl_code: qs.parse(props.location.search)['?code'],
-            stored_accounts: []
+            stored_accounts: [],
+            redirect_to_login: false
         }
 
-        if(getCookie('snapshot_user_account') === undefined) {
-            // axios.get(`/validateUser?google_id=${getCookie('snapshot_user_account')}`).then(response => {
-            //     response.valid
-            //         ? true
-            //         : window.history.push('/login');
-            // })
-            window.history.push('/login');
+        if(getCookie('snapshot_user_account') !== undefined) {
+            axios.get(`/validateUser?google_id=${getCookie('snapshot_user_account').google_id}`).then(response => {
+                return response.valid
+                    ? true
+                    : this.setState({redirect_to_login: true});
+            });
+        } else {
+            this.setState({redirect_to_login: true});
         }
     }
     
@@ -136,6 +139,12 @@ class Home extends Component {
     }
 
     render() {
+        if(this.state.redirect_to_login) {
+            return(
+                <Redirect to="/login" />
+            )
+        }
+
         return(
             <PageTemplate
                 navigation={true}

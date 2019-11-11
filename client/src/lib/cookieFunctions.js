@@ -43,5 +43,6 @@ function getAllCookies() {
 export {
     createCookie,
     getCookie,
-    getAllCookies
+    getAllCookies,
+    checkUser
 }

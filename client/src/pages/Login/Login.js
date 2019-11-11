@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 
@@ -14,9 +14,20 @@ import { createCookie, getCookie } from '../../lib/cookieFunctions';
 class Login extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            redirect: false,
+            path: ""
+        }
     
         if(getCookie('snapshot_user_account') !== undefined) {
-            window.history.push('/myAccounts');
+            axios.get(`/validateUser?google_id=${getCookie('snapshot_user_account').google_id}`).then(response => {
+                return response.valid
+                    ? true
+                    : this.setState({redirect: true, path: "/home"});
+            });
+        } else {
+            this.setState({redirect: true, path: "/home"});
         }
     }
 
@@ -39,9 +50,9 @@ class Login extends Component {
                 createCookie('snapshot_user_account', accountData);
                 
                 if(response.data.exists) {
-                    window.history.push('/myAccounts');
+                    this.setState({redirect: true, path: "/home"});
                 } else {
-                    window.history.push(response.data.redirect_url);
+                    this.setState({redirect: true, path: response.data.redirect_url})
                 }
             }).catch(e => {
                 console.log(e);
@@ -49,6 +60,12 @@ class Login extends Component {
     }
 
     render() {
+        if(this.state.redirect) {
+            return(
+                <Redirect to={this.state.path} />
+            )
+        }
+
         return(
             <PageTemplate
                 loginButton={false}
