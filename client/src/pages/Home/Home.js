@@ -41,20 +41,25 @@ class Home extends Component {
     }
     
     componentDidMount() {
-        const google_id = getCookie('snapshot_user_account').google_id;
+        
+        if(getCookie('snapshot_user_account') !== undefined) {
+            const google_id = getCookie('snapshot_user_account').google_id;
+            
+            if(this.state.tl_code !== undefined) {
+                const req_url = `/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
 
-        if(this.state.tl_code !== undefined) {
-            const req_url = `/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
+                axios.get(req_url)
+                    .then(response => {
+                        this.loadAccounts(google_id);
+                    }).catch(e => {
+                        console.log(e);
+                    });
 
-            axios.get(req_url)
-                .then(response => {
-                    this.loadAccounts(google_id);
-                }).catch(e => {
-                    console.log(e);
-                });
-
+            } else{
+                this.loadAccounts(google_id);
+            }
         } else {
-            this.loadAccounts(google_id);
+            this.setState({redirect_to_login: true});
         }
     }
 
