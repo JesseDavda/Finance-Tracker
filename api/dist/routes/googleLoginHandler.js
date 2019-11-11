@@ -17,6 +17,7 @@ var router = _express["default"].Router();
 
 var GOOGLE_CODE_EXCHANGE_URL = 'https://oauth2.googleapis.com/token';
 router.post('/googleOAuthTokenHandler', function (req, res) {
+  console.log("Router for google oauth handler called");
   console.log(req.body);
   var code = req.body.code;
   var codeExchangeBody = {

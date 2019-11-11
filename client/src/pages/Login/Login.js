@@ -52,6 +52,7 @@ class Login extends Component {
                 if(response.data.exists) {
                     this.setState({redirect: true, path: "/home"});
                 } else {
+                    console.log("redirecting to truelayer auth");
                     this.setState({redirect: true, path: response.data.redirect_url})
                 }
             }).catch(e => {

@@ -8,6 +8,7 @@ const router = express.Router();
 const GOOGLE_CODE_EXCHANGE_URL = 'https://oauth2.googleapis.com/token';
 
 router.post('/googleOAuthTokenHandler', (req, res) => {
+    console.log("Router for google oauth handler called");
     console.log(req.body);
     const code = req.body.code;
 
