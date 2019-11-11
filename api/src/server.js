@@ -1,14 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import mongoose from './db/mongo/mongoDB';
-import * as FinanceTracker from './config/spa.config';
-import fallback from 'express-history-api-fallback';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 function getAssetPath() {
     return path.join(__dirname, "../client/build/static");

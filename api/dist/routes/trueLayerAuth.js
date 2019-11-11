@@ -24,7 +24,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var router = _express["default"].Router();
 
 router.get('/getTrueLayerAccessToken', function (req, res) {
-  var googleId = req.query.google_id;
+  console.log("The cookies: ", req.cookies);
   var postObject = {
     grant_type: 'authorization_code',
     client_id: process.env.TRUE_LAYER_CLIENT_ID,
@@ -52,15 +52,11 @@ router.get('/getTrueLayerAccessToken', function (req, res) {
       "new": true
     }, function (err, doc) {
       if (err) console.log("There was an error updating the data: ", err);
-      res.status(200).json({
-        google_id: doc.google_id
-      }).end();
+      res.redirect('/');
     });
   })["catch"](function (e) {
     console.log(e.response.data);
-    res.status(500).json({
-      error: e.response.data
-    }).end();
+    res.redirect('/');
   });
 });
 var _default = router;

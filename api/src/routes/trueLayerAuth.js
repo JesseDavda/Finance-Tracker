@@ -7,7 +7,7 @@ import { Accounts } from '../db/mongo/models';
 const router = express.Router();
 
 router.get('/getTrueLayerAccessToken', (req, res) => {
-    const googleId = req.query.google_id;
+    console.log("The cookies: ", req.cookies);
 
     const postObject = {
         grant_type: 'authorization_code',
@@ -33,11 +33,11 @@ router.get('/getTrueLayerAccessToken', (req, res) => {
             Accounts.findOneAndUpdate({google_id: googleId}, {$set: {...updateObject}}, {new: true}, (err, doc) => {
                 if(err) console.log("There was an error updating the data: ", err);
 
-                res.status(200).json({google_id: doc.google_id}).end();
+                res.redirect('/');
             }); 
         }).catch(e => {
             console.log(e.response.data)
-            res.status(500).json({error: e.response.data}).end();
+            res.redirect('/');
         });
 });
 
