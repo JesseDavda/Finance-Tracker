@@ -55,6 +55,7 @@ async function saveNewUser(user_data) {
 }
 
 function storeUserInfo(access_token) {
+    console.log("The access token: ", access_token);
     const config = {
         headers: {
             'Authorization': `Bearer ${access_token}` 

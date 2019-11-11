@@ -99,6 +99,7 @@ function _saveNewUser() {
 }
 
 function storeUserInfo(access_token) {
+  console.log("The access token: ", access_token);
   var config = {
     headers: {
       'Authorization': "Bearer ".concat(access_token)
