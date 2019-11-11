@@ -65,7 +65,7 @@ class Home extends Component {
 
     componentDidUpdate() {
         if(getCookie('snapshot_user_account') === undefined) {
-            window.history.push('/login');
+            this.setState({redirect_to_login: true});
         }
     }
 
