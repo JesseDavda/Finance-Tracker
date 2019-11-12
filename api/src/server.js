@@ -10,10 +10,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 function getAssetPath() {
-    return path.join(__dirname, "../client/build/static");
+    return path.join(__dirname, "../../client/build/static");
 }
  
-app.use(express.static('../client/build'));
+// app.use(express.static('../../client/build'));
 app.get('/', (req, res) => {
     res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false});
 });
