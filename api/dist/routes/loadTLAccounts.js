@@ -90,7 +90,7 @@ function _callForAccounts() {
             return _models.Accounts.findOne({
               google_id: googleId
             }).exec().then(function (doc) {
-              console.log(doc);
+              console.log("This is the doc returned from findOne: ", doc);
               return doc === null ? doc : doc.tl_access_token;
             })["catch"](function (e) {
               console.log(e);
@@ -104,12 +104,13 @@ function _callForAccounts() {
               }
             };
 
-            if (!(accessToken !== null)) {
+            if (!(accessToken !== null || accessToken !== undefined)) {
               _context4.next = 9;
               break;
             }
 
             return _context4.abrupt("return", _axios["default"].get('https://api.truelayer.com/data/v1/accounts', config).then(function (response) {
+              console.log(response);
               return getBalances(response.data.results, accessToken).then(function (res) {
                 return res;
               });
@@ -210,26 +211,27 @@ function () {
 
           case 5:
             accounts = _context.sent;
-            // try {
+            console.log(accounts); // try {
             // accounts = await addAccounts(googleId, accounts).linked_bank_accounts;
+
             res.status(200).json(accounts).end(); // } catch(e) {
             //     console.log(e);
             // }
 
-            _context.next = 12;
+            _context.next = 13;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](2);
             console.log(_context.t0);
 
-          case 12:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[2, 9]]);
+    }, _callee, null, [[2, 10]]);
   }));
 
   return function (_x6, _x7) {

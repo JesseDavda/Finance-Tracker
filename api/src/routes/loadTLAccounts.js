@@ -35,7 +35,7 @@ async function callForAccounts(googleId) {
     console.log("This is the google id: ", googleId);
     const accessToken = await Accounts.findOne({google_id: googleId}).exec()
         .then(doc => {
-            console.log(doc);
+            console.log("This is the doc returned from findOne: ", doc);
             return doc === null ? doc : doc.tl_access_token;
         }).catch(e => {
             console.log(e);
@@ -47,9 +47,10 @@ async function callForAccounts(googleId) {
         }
     }
     
-    if(accessToken !== null) {
+    if(accessToken !== null || accessToken !== undefined) {
         return axios.get('https://api.truelayer.com/data/v1/accounts', config)
                 .then(response => {
+                    console.log(response);
                     return getBalances(response.data.results, accessToken).then(res => res)
                 }).catch(async e => {
                     await refreshAccessToken(googleId);
@@ -78,6 +79,7 @@ router.get('/loadAccounts', async (req, res) => {
 
     try {
         accounts = await callForAccounts(googleId);
+        console.log(accounts);
 
         // try {
             // accounts = await addAccounts(googleId, accounts).linked_bank_accounts;
