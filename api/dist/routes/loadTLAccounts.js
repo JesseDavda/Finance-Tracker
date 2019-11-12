@@ -103,7 +103,7 @@ function _callForAccounts() {
               }
             };
 
-            if (!(accessToken === null)) {
+            if (!(accessToken !== null)) {
               _context4.next = 9;
               break;
             }

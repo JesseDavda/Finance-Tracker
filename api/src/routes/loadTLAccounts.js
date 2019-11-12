@@ -46,7 +46,7 @@ async function callForAccounts(googleId) {
         }
     }
     
-    if(accessToken === null) {
+    if(accessToken !== null) {
         return axios.get('https://api.truelayer.com/data/v1/accounts', config)
                 .then(response => {
                     return getBalances(response.data.results, accessToken).then(res => res)
