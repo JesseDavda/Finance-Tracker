@@ -36,7 +36,7 @@ app.use(_express["default"].json());
 app.use((0, _cookieParser["default"])());
 
 function getAssetPath() {
-  return _path["default"].join(__dirname, "../../client/build/static");
+  return _path["default"].join(__dirname, "../client/build/static");
 } // app.use(express.static('../../client/build'));
 
 

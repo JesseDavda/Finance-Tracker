@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 function getAssetPath() {
-    return path.join(__dirname, "../../client/build/static");
+    return path.join(__dirname, "../client/build/static");
 }
  
 // app.use(express.static('../../client/build'));
