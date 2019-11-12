@@ -49,6 +49,8 @@ class Login extends Component {
                     google_id: response.data.google_id
                 } 
 
+                console.log("This is the context: ", this);
+                console.log("This is the bound context: ", self);
                 createCookie('snapshot_user_account', accountData);
                 
                 if(response.data.exists) {
