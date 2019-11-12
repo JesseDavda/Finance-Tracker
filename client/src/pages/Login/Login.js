@@ -38,6 +38,8 @@ class Login extends Component {
             code: response.code
         }
 
+        const self = this;
+
         axios.post('/googleOAuthTokenHandler', postBody)
             .then(response => {
                 const accountData = {
@@ -50,10 +52,10 @@ class Login extends Component {
                 createCookie('snapshot_user_account', accountData);
                 
                 if(response.data.exists) {
-                    this.setState({redirect: true, path: "/home"});
+                    self.setState({redirect: true, path: "/home"});
                 } else {
                     console.log("redirecting to truelayer auth");
-                    this.setState({redirect: true, path: response.data.redirect_url})
+                    self.setState({redirect: true, path: response.data.redirect_url})
                 }
             }).catch(e => {
                 console.log(e);
