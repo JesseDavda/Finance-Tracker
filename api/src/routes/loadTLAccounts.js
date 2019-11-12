@@ -35,6 +35,7 @@ async function callForAccounts(googleId) {
     console.log("This is the google id: ", googleId);
     const accessToken = await Accounts.findOne({google_id: googleId}).exec()
         .then(doc => {
+            console.log(doc);
             return doc === null ? doc : doc.tl_access_token;
         }).catch(e => {
             console.log(e);

@@ -90,6 +90,7 @@ function _callForAccounts() {
             return _models.Accounts.findOne({
               google_id: googleId
             }).exec().then(function (doc) {
+              console.log(doc);
               return doc === null ? doc : doc.tl_access_token;
             })["catch"](function (e) {
               console.log(e);
