@@ -204,12 +204,13 @@ function () {
         switch (_context.prev = _context.next) {
           case 0:
             googleId = req.query.google_id;
+            console.log("This is the google id passed into the loadAccounts route: ", googleId);
             accounts = [];
-            _context.prev = 2;
-            _context.next = 5;
+            _context.prev = 3;
+            _context.next = 6;
             return callForAccounts(googleId);
 
-          case 5:
+          case 6:
             accounts = _context.sent;
             console.log(accounts); // try {
             // accounts = await addAccounts(googleId, accounts).linked_bank_accounts;
@@ -218,20 +219,20 @@ function () {
             //     console.log(e);
             // }
 
-            _context.next = 13;
+            _context.next = 14;
             break;
 
-          case 10:
-            _context.prev = 10;
-            _context.t0 = _context["catch"](2);
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](3);
             console.log(_context.t0);
 
-          case 13:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[2, 10]]);
+    }, _callee, null, [[3, 11]]);
   }));
 
   return function (_x6, _x7) {

@@ -75,6 +75,7 @@ async function addAccounts(googleId, accounts) {
 
 router.get('/loadAccounts', async (req, res) => {
     const googleId = req.query.google_id;
+    console.log("This is the google id passed into the loadAccounts route: ", googleId);
     let accounts = [];
 
     try {
