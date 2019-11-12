@@ -34,6 +34,7 @@ router.post('/googleOAuthTokenHandler', function (req, res) {
       console.log(data);
       res.status(200).json(data).end();
     })["catch"](function (e) {
+      console.log(e);
       res.status(500).json(e.response.data).end();
     });
   })["catch"](function (e) {

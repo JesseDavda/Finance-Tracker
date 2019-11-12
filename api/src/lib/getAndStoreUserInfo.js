@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import axios from 'axios';
-import shajs from 'sha.js';
 
 import { Accounts } from '../db/mongo/models';
 
 function checkIfUserExists(google_id) {
     return Accounts.findOne({google_id: google_id}).then(data => {
-        return _.isEmpty(data) ? false : true;
+        return _.isEmpty(data);
     });
 }
 
@@ -50,7 +49,10 @@ async function saveNewUser(user_data) {
                     hasAccounts: !_.isEmpty(savedUser._doc.linked_bank_accounts)
                 }
             })
-            .catch(e => e);
+            .catch(e => {
+                console.log(e)
+                return e;
+            });
     }
 }
 

@@ -28,6 +28,7 @@ router.post('/googleOAuthTokenHandler', (req, res) => {
                     console.log(data);
                     res.status(200).json(data).end();
                 }).catch(e => {
+                    console.log(e);
                     res.status(500).json(e.response.data).end();
                 });
         }).catch(e => {

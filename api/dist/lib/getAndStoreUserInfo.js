@@ -15,15 +15,13 @@ var _lodash = _interopRequireDefault(require("lodash"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
-var _sha = _interopRequireDefault(require("sha.js"));
-
 var _models = require("../db/mongo/models");
 
 function checkIfUserExists(google_id) {
   return _models.Accounts.findOne({
     google_id: google_id
   }).then(function (data) {
-    return _lodash["default"].isEmpty(data) ? false : true;
+    return _lodash["default"].isEmpty(data);
   });
 }
 
@@ -85,6 +83,7 @@ function _saveNewUser() {
                 hasAccounts: !_lodash["default"].isEmpty(savedUser._doc.linked_bank_accounts)
               };
             })["catch"](function (e) {
+              console.log(e);
               return e;
             }));
 
