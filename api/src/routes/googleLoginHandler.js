@@ -22,10 +22,8 @@ router.post('/googleOAuthTokenHandler', (req, res) => {
 
     axios.post(GOOGLE_CODE_EXCHANGE_URL, codeExchangeBody)
         .then(response => {
-            console.log(response.data);
             storeUserInfo(response.data.access_token)
                 .then(data => {
-                    console.log(data);
                     res.status(200).json(data).end();
                 }).catch(e => {
                     console.log(e);

@@ -8,6 +8,8 @@ var _cors = _interopRequireDefault(require("cors"));
 
 var _path = _interopRequireDefault(require("path"));
 
+var _mongoDB = _interopRequireDefault(require("./db/mongo/mongoDB"));
+
 var _cookieParser = _interopRequireDefault(require("cookie-parser"));
 
 var _trueLayerAuth = _interopRequireDefault(require("./routes/trueLayerAuth"));
