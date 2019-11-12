@@ -37,9 +37,9 @@ app.use((0, _cookieParser["default"])());
 
 function getAssetPath() {
   return _path["default"].join(__dirname, "../client/build/static");
-} // app.use(express.static('../../client/build'));
+}
 
-
+app.use(_express["default"]["static"]('../client/build'));
 app.get('/', function (req, res) {
   res.status(200).sendFile(_path["default"].resolve(getAssetPath(), 'index.html'), {
     etag: false
