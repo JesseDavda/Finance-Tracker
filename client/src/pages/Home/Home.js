@@ -44,12 +44,14 @@ class Home extends Component {
         
         if(getCookie('snapshot_user_account') !== undefined) {
             const google_id = getCookie('snapshot_user_account').google_id;
+            console.log("The google ID: ", google_id);
             
             if(this.state.tl_code !== undefined) {
                 const req_url = `/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
 
                 axios.get(req_url)
                     .then(response => {
+                        console.log("The google ID passed into loadAccounts: ", google_id);
                         this.loadAccounts(google_id);
                     }).catch(e => {
                         console.log(e);
