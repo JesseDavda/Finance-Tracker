@@ -72,6 +72,7 @@ class Home extends Component {
     loadAccounts(google_id) {
         axios.get(`/loadAccounts?google_id=${google_id}`)
             .then(response => {
+                console.log(response);
                 this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
             }).catch(e => {
                 console.log(e);
