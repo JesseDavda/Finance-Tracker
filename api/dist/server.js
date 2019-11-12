@@ -32,6 +32,8 @@ var _addBankAccounts = _interopRequireDefault(require("./routes/addBankAccounts"
 
 var _getAccountInfo = _interopRequireDefault(require("./routes/getAccountInfo"));
 
+var _validateUser = _interopRequireDefault(require("./routes/validateUser"));
+
 var app = (0, _express["default"])();
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
@@ -71,3 +73,4 @@ app.use(_getPredictedPayments["default"]);
 app.use(_googleLoginHandler["default"]);
 app.use(_addBankAccounts["default"]);
 app.use(_getAccountInfo["default"]);
+app.use(_validateUser["default"]);

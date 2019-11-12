@@ -40,6 +40,7 @@ import getPredictedPayments from './routes/getPredictedPayments';
 import googleAuth from './routes/googleLoginHandler';
 import addBankAccounts from './routes/addBankAccounts';
 import getAccountInfo from './routes/getAccountInfo';
+import validateUser from './routes/validateUser';
 
 app.use(trueLayerAuth);
 app.use(refreshTLToken);
@@ -51,3 +52,4 @@ app.use(getPredictedPayments);
 app.use(googleAuth);
 app.use(addBankAccounts);
 app.use(getAccountInfo);
+app.use(validateUser);
