@@ -20,7 +20,7 @@ class Login extends Component {
             path: ""
         }
 
-        this.responseGoogle.bind(this);
+        this.responseGoogle = this.responseGoogle.bind(this);
     
         if(getCookie('snapshot_user_account') !== undefined) {
             axios.get(`/validateUser?google_id=${getCookie('snapshot_user_account').google_id}`).then(response => {
