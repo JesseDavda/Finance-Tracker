@@ -42,7 +42,7 @@ function () {
           case 0:
             console.log(req.cookies);
 
-            if (!req.cookies.hasOwnProperty('snapshot_user_account')) {
+            if (!(!_lodash["default"].isEmpty(req.cookies) || req.cookies.hasOwnProperty('snapshot_user_account'))) {
               _context.next = 9;
               break;
             }
