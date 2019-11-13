@@ -7,6 +7,8 @@ mongoose.connect(DB_SRV_URL, { useNewUrlParser: true, useUnifiedTopology: true }
     err => { console.log('There was an error connecting to the mongodb database: ', err) }
 );
 
+mongoose.set('useFindAndModify', false);
+
 export {
     mongoose
 }

@@ -26,7 +26,6 @@ async function saveNewUser(user_data) {
 
     if(await checkIfUserExists(user_data.id)) {
         return {
-            exists: true,
             redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
             first_name: userBody.first_name,
             last_name: userBody.last_name,
@@ -39,7 +38,6 @@ async function saveNewUser(user_data) {
         return newUser.save()
             .then(savedUser => {
                 return {
-                    exists: false,
                     redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
                     first_name: savedUser._doc.first_name,
                     last_name: savedUser._doc.last_name,

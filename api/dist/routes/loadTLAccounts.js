@@ -85,18 +85,16 @@ function _callForAccounts() {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            console.log("This is the google id: ", googleId);
-            _context4.next = 3;
+            _context4.next = 2;
             return _models.Accounts.findOne({
               google_id: googleId
             }).exec().then(function (doc) {
-              console.log("This is the doc returned from findOne: ", doc);
               return doc === null ? doc : doc.tl_access_token;
             })["catch"](function (e) {
               console.log(e);
             });
 
-          case 3:
+          case 2:
             accessToken = _context4.sent;
             config = {
               headers: {
@@ -105,7 +103,7 @@ function _callForAccounts() {
             };
 
             if (!(accessToken !== null || accessToken !== undefined)) {
-              _context4.next = 9;
+              _context4.next = 8;
               break;
             }
 
@@ -123,14 +121,21 @@ function _callForAccounts() {
                   while (1) {
                     switch (_context3.prev = _context3.next) {
                       case 0:
-                        console.log("Refreshing the access token as thr returned code is 401 unauthorized: ", e.response.status);
+                        if (!(e.response.status === 401)) {
+                          _context3.next = 6;
+                          break;
+                        }
+
                         _context3.next = 3;
                         return (0, _refreshAccessToken["default"])(googleId);
 
                       case 3:
-                        return _context3.abrupt("return", callForAccounts());
+                        return _context3.abrupt("return", callForAccounts(googleId));
 
-                      case 4:
+                      case 6:
+                        return _context3.abrupt("return", e);
+
+                      case 7:
                       case "end":
                         return _context3.stop();
                     }
@@ -143,10 +148,10 @@ function _callForAccounts() {
               };
             }()));
 
-          case 9:
+          case 8:
             return _context4.abrupt("return", false);
 
-          case 10:
+          case 9:
           case "end":
             return _context4.stop();
         }
@@ -203,36 +208,31 @@ function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            googleId = req.query.google_id;
-            console.log("This is the google id passed into the loadAccounts route: ", googleId);
+            googleId = JSON.parse(req.cookies['snapshot_user_account']).google_id;
             accounts = [];
-            _context.prev = 3;
-            _context.next = 6;
+            _context.prev = 2;
+            _context.next = 5;
             return callForAccounts(googleId);
 
-          case 6:
+          case 5:
             accounts = _context.sent;
-            console.log(accounts); // try {
-            // accounts = await addAccounts(googleId, accounts).linked_bank_accounts;
-
-            res.status(200).json(accounts).end(); // } catch(e) {
-            //     console.log(e);
-            // }
-
-            _context.next = 14;
+            if (accounts !== false) res.status(200).json(accounts).end();else res.status(500).json({
+              error_message: "The accounts could not be loaded, please try again later"
+            });
+            _context.next = 12;
             break;
 
-          case 11:
-            _context.prev = 11;
-            _context.t0 = _context["catch"](3);
-            console.log(_context.t0);
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](2);
+            res.status(500).json(_context.t0).end();
 
-          case 14:
+          case 12:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[3, 11]]);
+    }, _callee, null, [[2, 9]]);
   }));
 
   return function (_x6, _x7) {

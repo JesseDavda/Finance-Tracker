@@ -23,7 +23,7 @@ function checkIfUserExists(googleId) {
   return _models.Accounts.findOne({
     google_id: googleId
   }).exec().then(function (data) {
-    return _lodash["default"].isEmpty(data);
+    return !_lodash["default"].isEmpty(data);
   })["catch"](function (e) {
     return false;
   });
@@ -40,18 +40,29 @@ function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            console.log(req.cookies);
-            googleId = req.query.google_id;
+            if (!req.cookies.hasOwnProperty('snapshot_user_account')) {
+              _context.next = 8;
+              break;
+            }
+
+            googleId = JSON.parse(req.cookies['snapshot_user_account']).google_id;
             _context.next = 4;
-            return checkIfUserExists;
+            return checkIfUserExists(googleId);
 
           case 4:
             exists = _context.sent;
             res.status(200).json({
               valid: exists
             }).end();
+            _context.next = 9;
+            break;
 
-          case 6:
+          case 8:
+            res.status(200).json({
+              valid: false
+            }).end();
+
+          case 9:
           case "end":
             return _context.stop();
         }

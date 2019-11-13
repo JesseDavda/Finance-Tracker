@@ -32,10 +32,8 @@ async function getBalances(accounts, access_token) {
 }
 
 async function callForAccounts(googleId) {
-    console.log("This is the google id: ", googleId);
     const accessToken = await Accounts.findOne({google_id: googleId}).exec()
         .then(doc => {
-            console.log("This is the doc returned from findOne: ", doc);
             return doc === null ? doc : doc.tl_access_token;
         }).catch(e => {
             console.log(e);
@@ -52,9 +50,12 @@ async function callForAccounts(googleId) {
                 .then(response => {
                     return getBalances(response.data.results, accessToken).then(res => res)
                 }).catch(async e => {
-                    console.log("Refreshing the access token as thr returned code is 401 unauthorized: ", e.response.status);
-                    await refreshAccessToken(googleId);
-                    return callForAccounts();
+                    if(e.response.status === 401) {
+                        await refreshAccessToken(googleId);
+                        return callForAccounts(googleId);
+                    } else {
+                        return e;
+                    }
                 });
     } else {
         return false;
@@ -62,34 +63,22 @@ async function callForAccounts(googleId) {
 }
 
 async function addAccounts(googleId, accounts) {
-    // const currentAccounts = await Accounts.findOne({google_id: googleId}).exec()
-    //     .then(doc => doc._doc.linked_bank_accounts)
-    //     .catch(e => e);
-
-    // accounts.map(account => currentAccounts.push(account));
-
     return Accounts.findOneAndUpdate({google_id: googleId}, {$set: {linked_bank_accounts: accounts}}, {new: true}).exec()
             .then(doc => doc._doc)
             .catch(e => e);
 }
 
 router.get('/loadAccounts', async (req, res) => {
-    const googleId = req.query.google_id;
-    console.log("This is the google id passed into the loadAccounts route: ", googleId);
+    const googleId = JSON.parse(req.cookies['snapshot_user_account']).google_id;
     let accounts = [];
 
     try {
         accounts = await callForAccounts(googleId);
-        console.log(accounts);
 
-        // try {
-            // accounts = await addAccounts(googleId, accounts).linked_bank_accounts;
-        res.status(200).json(accounts).end();
-        // } catch(e) {
-        //     console.log(e);
-        // }
+        if(accounts !== false) res.status(200).json(accounts).end();
+        else res.status(500).json({error_message: "The accounts could not be loaded, please try again later"});
     } catch(e) {
-        console.log(e);
+        res.status(500).json(e).end();
     }
 });
 

@@ -24,3 +24,5 @@ _mongoose["default"].connect(DB_SRV_URL, {
 }, function (err) {
   console.log('There was an error connecting to the mongodb database: ', err);
 });
+
+_mongoose["default"].set('useFindAndModify', false);

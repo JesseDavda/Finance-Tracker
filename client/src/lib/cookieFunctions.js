@@ -12,7 +12,7 @@ function createCookie(name, value, options) {
         expires: defaultExpiry,
         maxAge: 1000,
         httpOnly: false,
-        sameSite: true
+        sameSite: false
     }
 
     Object.assign(defaultOptions, options);
@@ -40,9 +40,14 @@ function getAllCookies() {
     return Cookie.getAll();
 }
 
+function deleteCookie(name) {
+    return Cookie.remove(name);
+}
+
 export {
     createCookie,
     getCookie,
     getAllCookies,
-    checkUser
+    checkUser,
+    deleteCookie
 }

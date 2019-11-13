@@ -21,16 +21,14 @@ class Login extends Component {
         }
 
         this.responseGoogle = this.responseGoogle.bind(this);
-    
-        if(getCookie('snapshot_user_account') !== undefined) {
-            axios.get(`/validateUser?google_id=${getCookie('snapshot_user_account').google_id}`).then(response => {
-                return response.valid
-                    ? true
-                    : this.setState({redirect: true, path: "/home"});
-            });
-        } else {
-            this.setState({redirect: true, path: "/home"});
-        }
+    }
+
+    componentDidMount() {
+        axios.get(`/validateUser`).then(response => {
+            return response.data.valid
+                ? this.setState({redirect: true, path: "/home"})
+                : this.setState({redirect: false, path: ""});
+        });
     }
 
     responseGoogle(response) {
@@ -38,9 +36,6 @@ class Login extends Component {
             code: response.code
         }
 
-        const self = this;
-
-        console.log("Step 1: recieved the code from the login: ", response.code);
         axios.post('/googleOAuthTokenHandler', postBody)
             .then(response => {
                 const accountData = {
@@ -52,12 +47,10 @@ class Login extends Component {
 
                 createCookie('snapshot_user_account', accountData);
                 
-                if(response.data.exists) {
-                    console.log("Step 7: The JWT is set and the True Layer Access token is found the user is then redirected to the myAccounts page")
-                    self.setState({redirect: true, path: "/home"});
+                if(response.data.hasAccounts) {
+                    this.setState({redirect: true, path: "/home"});
                 } else {
-                    console.log("Step 7: The JWT is set but the True Layer access token is needed so redirecting to the true layer auth");
-                    self.setState({redirect: true, path: response.data.redirect_url})
+                    window.location.replace(response.data.redirect_url);
                 }
             }).catch(e => {
                 console.log(e);

@@ -7,13 +7,13 @@ import { Accounts } from '../db/mongo/models';
 const router = express.Router();
 
 router.get('/getTrueLayerAccessToken', (req, res) => {
-    console.log("The cookies: ", req.cookies);
+    const googleId = JSON.parse(req.cookies['snapshot_user_account']).google_id;
 
     const postObject = {
         grant_type: 'authorization_code',
         client_id: process.env.TRUE_LAYER_CLIENT_ID,
         client_secret: process.env.TRUE_LAYER_CLIENT_SECRET,
-        redirect_uri: 'http://localhost:3000/myAccounts',
+        redirect_uri: process.env.TRUE_LAYER_REDIRECT_URI,
         code: req.query.code
     }
 

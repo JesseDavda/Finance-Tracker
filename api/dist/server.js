@@ -50,14 +50,10 @@ app.get('/', function (req, res) {
   });
 });
 app.get('/login', function (req, res) {
-  res.status(200).sendFile(_path["default"].resolve(getAssetPath(), 'index.html'), {
-    etag: false
-  });
+  res.redirect('/');
 });
 app.get('/myAccounts', function (req, res) {
-  res.status(200).sendFile(_path["default"].resolve(getAssetPath(), 'index.html'), {
-    etag: false
-  });
+  res.redirect('/');
 });
 var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {

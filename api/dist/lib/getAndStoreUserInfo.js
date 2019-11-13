@@ -60,7 +60,6 @@ function _saveNewUser() {
             }
 
             return _context.abrupt("return", {
-              exists: true,
               redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
               first_name: userBody.first_name,
               last_name: userBody.last_name,
@@ -73,7 +72,6 @@ function _saveNewUser() {
           case 8:
             return _context.abrupt("return", newUser.save().then(function (savedUser) {
               return {
-                exists: false,
                 redirect_url: process.env.TRUE_LAYER_REDIRECT_URL,
                 first_name: savedUser._doc.first_name,
                 last_name: savedUser._doc.last_name,

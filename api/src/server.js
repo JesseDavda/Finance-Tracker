@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
     res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false});
 });
 app.get('/login', (req, res) => {
-    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false});
+    res.redirect('/');
 });
 app.get('/myAccounts', (req, res) => {
-    res.status(200).sendFile(path.resolve(getAssetPath(), 'index.html'), {etag: false});
+    res.redirect('/');
 });
 
 const PORT = process.env.PORT || 3001;

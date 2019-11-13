@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Element } from 'react-scroll';
 import { Redirect } from 'react-router-dom';
 
-import { getCookie } from '../../lib/cookieFunctions';
+import { getCookie, deleteCookie } from '../../lib/cookieFunctions';
 
 import Account from '../../components/Account';
 import TransactionCalendarHeatMap from '../../components/TransactionCalendarHeatMap';
@@ -28,55 +28,22 @@ class Home extends Component {
             stored_accounts: [],
             redirect_to_login: false
         }
-
-        if(getCookie('snapshot_user_account') !== undefined) {
-            axios.get(`/validateUser?google_id=${getCookie('snapshot_user_account').google_id}`).then(response => {
-                return response.valid
-                    ? true
-                    : this.setState({redirect_to_login: true});
-            });
-        } else {
-            this.setState({redirect_to_login: true});
-        }
     }
-    
+
     componentDidMount() {
-        
-        if(getCookie('snapshot_user_account') !== undefined) {
-            const google_id = getCookie('snapshot_user_account').google_id;
-            console.log("The google ID: ", google_id);
-            
-            if(this.state.tl_code !== undefined) {
-                const req_url = `/getTrueLayerAccessToken?code=${this.state.tl_code}&google_id=${google_id}`;
-
-                axios.get(req_url)
-                    .then(response => {
-                        console.log("The google ID passed into loadAccounts: ", google_id);
-                        this.loadAccounts(google_id);
-                    }).catch(e => {
-                        console.log(e);
-                    });
-
-            } else{
-                this.loadAccounts(google_id);
-            }
-        } else {
-            this.setState({redirect_to_login: true});
-        }
+        axios.get(`/validateUser`).then(response => {
+            this.loadAccounts();
+            return this.setState({redirect_to_login: !response.data.valid});
+        });
     }
 
-    componentDidUpdate() {
-        if(getCookie('snapshot_user_account') === undefined) {
-            this.setState({redirect_to_login: true});
-        }
-    }
-
-    loadAccounts(google_id) {
-        axios.get(`/loadAccounts?google_id=${google_id}`)
+    loadAccounts() {
+        axios.get(`/loadAccounts`)
             .then(response => {
-                console.log(response);
                 this.setState({accounts: response.data, heatmap_account_id: response.data[0].account_id});
             }).catch(e => {
+                deleteCookie('snapshot_user_account');
+                window.alert("There was an error loading your accounts, please try again in a few minutes.");
                 console.log(e);
             });
     }
@@ -89,7 +56,6 @@ class Home extends Component {
                 </div>
             )
         } else {
-            console.log(this.state.accounts)
             return(
                 <div style={styles.accountsContainer}>
                     {this.state.accounts.map(account => {

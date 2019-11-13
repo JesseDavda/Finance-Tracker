@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "bash ./scripts/start_server.sh",
-    "build": "bash ./scripts/build.sh"
+    "build": "bash ./scripts/build.sh",
+    "startDev": "bash ./scripts/start_dev_server.sh"
   }
 }

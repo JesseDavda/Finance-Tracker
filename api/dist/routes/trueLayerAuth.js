@@ -24,12 +24,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 var router = _express["default"].Router();
 
 router.get('/getTrueLayerAccessToken', function (req, res) {
-  console.log("The cookies: ", req.cookies);
+  var googleId = JSON.parse(req.cookies['snapshot_user_account']).google_id;
   var postObject = {
     grant_type: 'authorization_code',
     client_id: process.env.TRUE_LAYER_CLIENT_ID,
     client_secret: process.env.TRUE_LAYER_CLIENT_SECRET,
-    redirect_uri: 'http://localhost:3000/myAccounts',
+    redirect_uri: process.env.TRUE_LAYER_REDIRECT_URI,
     code: req.query.code
   };
   var config = {
