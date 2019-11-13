@@ -40,29 +40,31 @@ function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            console.log(req.cookies);
+
             if (!req.cookies.hasOwnProperty('snapshot_user_account')) {
-              _context.next = 8;
+              _context.next = 9;
               break;
             }
 
             googleId = JSON.parse(req.cookies['snapshot_user_account']).google_id;
-            _context.next = 4;
+            _context.next = 5;
             return checkIfUserExists(googleId);
 
-          case 4:
+          case 5:
             exists = _context.sent;
             res.status(200).json({
               valid: exists
             }).end();
-            _context.next = 9;
+            _context.next = 10;
             break;
 
-          case 8:
+          case 9:
             res.status(200).json({
               valid: false
             }).end();
 
-          case 9:
+          case 10:
           case "end":
             return _context.stop();
         }
