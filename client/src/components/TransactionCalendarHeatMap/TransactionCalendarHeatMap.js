@@ -18,6 +18,7 @@ class TransactionCalendarHeatMap extends Component {
         this.state = {
             accountIdNeeded: true,
             accountId: "",
+            dataRecieved: false,
             transactionData: [],
             startDate: moment().subtract(3, 'months'),
             endDate: moment(),
@@ -39,7 +40,7 @@ class TransactionCalendarHeatMap extends Component {
     callApiForTransactions(accountId, googleId) {
         axios.get(`/transactions?accountId=${accountId}&google_id=${googleId}`)
         .then(response => {
-            this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false});
+            this.setState({transactionData: Object.keys(response.data).map(i => response.data[i]), accountIdNeeded: false, dataRecieved: true});
         }).catch(e => {
             console.log(e);
         });
@@ -51,7 +52,7 @@ class TransactionCalendarHeatMap extends Component {
     }
 
     componentDidUpdate() {
-        if(!this.state.accountIdNeeded) {
+        if(!this.state.accountIdNeeded && !this.state.dataRecieved) {
            this.getTransactionData()
         }
     }

@@ -69,6 +69,7 @@ class RecurringPayments extends Component {
         this.state = {
             accountId: "",
             accountIdNeeded: true,
+            dataRecieved: false,
             paymentData: []
         }
     }
@@ -100,14 +101,14 @@ class RecurringPayments extends Component {
                     dataArray.push(item);
                 });
 
-                this.setState({ paymentData: dataArray, accountIdNeeded: false});
+                this.setState({ paymentData: dataArray, accountIdNeeded: false, dataRecieved: true});
             }).catch(e => {
                 console.log("ERROR: ", e);
             })
     }
 
     componentDidUpdate() {
-        if(!this.state.accountIdNeeded) {
+        if(!this.state.accountIdNeeded && !this.state.dataRecieved) {
             this.getPaymentData();
         }
     }

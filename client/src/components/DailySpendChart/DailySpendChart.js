@@ -15,6 +15,7 @@ class DailySpendChart extends Component {
         this.state = {
             accountId: "",
             accountIdNeeded: true,
+            dataRecieved: false,
             dailySpendData: []
         }
     }
@@ -34,14 +35,14 @@ class DailySpendChart extends Component {
         const googleId = getCookie('snapshot_user_account').google_id;
         axios.get(`/averageSpendDaily?accountId=${this.state.accountId}&google_id=${googleId}`)
             .then(response => {
-                this.setState({ dailySpendData: response.data, accountIdNeeded: false})
+                this.setState({ dailySpendData: response.data, accountIdNeeded: false, dataRecieved: true})
             }).catch(e => {
                 console.log("ERROR: ", e);
             })
     }
 
     componentDidUpdate() {
-        if(!this.state.accountIdNeeded) {
+        if(!this.state.accountIdNeeded && !this.state.dataRecieved) {
             this.getDailySpendData();
         }
     }
