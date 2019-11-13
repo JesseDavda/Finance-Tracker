@@ -11,6 +11,7 @@ function checkIfUserExists(googleId) {
 }
 
 router.get('/validateUser', async (req, res) => {
+    console.log(req.cookies);
     const googleId = req.query.google_id;
 
     const exists = await checkIfUserExists;

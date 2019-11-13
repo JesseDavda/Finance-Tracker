@@ -40,6 +40,7 @@ class Login extends Component {
 
         const self = this;
 
+        console.log("Step 1: recieved the code from the login: ", response.code);
         axios.post('/googleOAuthTokenHandler', postBody)
             .then(response => {
                 const accountData = {
@@ -47,16 +48,15 @@ class Login extends Component {
                     last_name: response.data.last_name,
                     picture_uri: response.data.picture_uri,
                     google_id: response.data.google_id
-                } 
+                }
 
-                console.log("This is the context: ", this);
-                console.log("This is the bound context: ", self);
                 createCookie('snapshot_user_account', accountData);
                 
                 if(response.data.exists) {
+                    console.log("Step 7: The JWT is set and the True Layer Access token is found the user is then redirected to the myAccounts page")
                     self.setState({redirect: true, path: "/home"});
                 } else {
-                    console.log("redirecting to truelayer auth");
+                    console.log("Step 7: The JWT is set but the True Layer access token is needed so redirecting to the true layer auth");
                     self.setState({redirect: true, path: response.data.redirect_url})
                 }
             }).catch(e => {

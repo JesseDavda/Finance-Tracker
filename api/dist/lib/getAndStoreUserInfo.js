@@ -98,12 +98,14 @@ function _saveNewUser() {
 }
 
 function storeUserInfo(access_token) {
+  console.log("Step 4: The user data is requested from the google API");
   var config = {
     headers: {
       'Authorization': "Bearer ".concat(access_token)
     }
   };
   return _axios["default"].get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', config).then(function (response) {
+    console.log("Step 5: The user data is recieved and then saved to the accounts database: ", response.data);
     return saveNewUser(response.data);
   })["catch"](function (e) {
     return e.response.data;

@@ -51,8 +51,7 @@ router.get('/getTrueLayerAccessToken', function (req, res) {
     }, {
       "new": true
     }, function (err, doc) {
-      if (err) console.log("There was an error updating the data: ", err);
-      res.redirect('/');
+      if (err) console.log("There was an error updating the data: ", err);else res.redirect('/');
     });
   })["catch"](function (e) {
     console.log(e.response.data);

@@ -32,8 +32,7 @@ router.get('/getTrueLayerAccessToken', (req, res) => {
 
             Accounts.findOneAndUpdate({google_id: googleId}, {$set: {...updateObject}}, {new: true}, (err, doc) => {
                 if(err) console.log("There was an error updating the data: ", err);
-
-                res.redirect('/');
+                else res.redirect('/');
             }); 
         }).catch(e => {
             console.log(e.response.data)

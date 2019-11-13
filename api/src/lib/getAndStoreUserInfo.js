@@ -57,6 +57,7 @@ async function saveNewUser(user_data) {
 }
 
 function storeUserInfo(access_token) {
+    console.log("Step 4: The user data is requested from the google API");
     const config = {
         headers: {
             'Authorization': `Bearer ${access_token}` 
@@ -65,7 +66,8 @@ function storeUserInfo(access_token) {
 
     return axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', config)
         .then(response => {
-           return saveNewUser(response.data)
+            console.log("Step 5: The user data is recieved and then saved to the accounts database: ", response.data);
+            return saveNewUser(response.data)
         }).catch(e => e.response.data);
 }
 

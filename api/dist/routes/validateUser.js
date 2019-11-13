@@ -40,17 +40,18 @@ function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            console.log(req.cookies);
             googleId = req.query.google_id;
-            _context.next = 3;
+            _context.next = 4;
             return checkIfUserExists;
 
-          case 3:
+          case 4:
             exists = _context.sent;
             res.status(200).json({
               valid: exists
             }).end();
 
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }
