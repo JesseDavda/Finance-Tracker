@@ -50,9 +50,9 @@ async function callForAccounts(googleId) {
     if(accessToken !== null || accessToken !== undefined) {
         return axios.get('https://api.truelayer.com/data/v1/accounts', config)
                 .then(response => {
-                    console.log(response);
                     return getBalances(response.data.results, accessToken).then(res => res)
                 }).catch(async e => {
+                    console.log("Refreshing the access token as thr returned code is 401 unauthorized: ", e.response.status);
                     await refreshAccessToken(googleId);
                     return callForAccounts();
                 });

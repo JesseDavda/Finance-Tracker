@@ -110,7 +110,6 @@ function _callForAccounts() {
             }
 
             return _context4.abrupt("return", _axios["default"].get('https://api.truelayer.com/data/v1/accounts', config).then(function (response) {
-              console.log(response);
               return getBalances(response.data.results, accessToken).then(function (res) {
                 return res;
               });
@@ -124,13 +123,14 @@ function _callForAccounts() {
                   while (1) {
                     switch (_context3.prev = _context3.next) {
                       case 0:
-                        _context3.next = 2;
+                        console.log("Refreshing the access token as thr returned code is 401 unauthorized: ", e.response.status);
+                        _context3.next = 3;
                         return (0, _refreshAccessToken["default"])(googleId);
 
-                      case 2:
+                      case 3:
                         return _context3.abrupt("return", callForAccounts());
 
-                      case 3:
+                      case 4:
                       case "end":
                         return _context3.stop();
                     }
