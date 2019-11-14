@@ -30,7 +30,6 @@ async function refreshAccessToken(googleId) {
     if(refreshToken !== 0) {
         return axios.post('https://auth.truelayer.com/connect/token', qs.stringify(refreshBody), config)
             .then(async response => {
-                console.log('Token Has Been refreshed!');
                 
                 const updateObject = {
                     tl_access_token: response.data.access_token,
@@ -39,7 +38,7 @@ async function refreshAccessToken(googleId) {
 
                 await Accounts.findOneAndUpdate({google_id: googleId}, {$set: {...updateObject}}, {new: true}).exec()
                 .then(doc => {
-                    console.log('saved!');
+                    return doc
                 }).catch(e => {
                     console.log("There was an error updating the data: ", e.response.data);
                 }); 

@@ -99,7 +99,7 @@ function _refreshAccessToken() {
                         }, {
                           "new": true
                         }).exec().then(function (doc) {
-                          console.log('saved!');
+                          return doc;
                         })["catch"](function (e) {
                           console.log("There was an error updating the data: ", e.response.data);
                         });

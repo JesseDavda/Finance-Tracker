@@ -17,8 +17,7 @@ var accountSchema = new Schema({
   picture_uri: String,
   email: String,
   linked_bank_accounts: Array,
-  cookie_key: String,
-  state: String,
+  hasAccounts: Boolean,
   tl_access_token: String,
   tl_refresh_token: String
 });
