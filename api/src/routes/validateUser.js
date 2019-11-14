@@ -11,8 +11,7 @@ function checkIfUserExists(googleId) {
 }
 
 router.get('/validateUser', async (req, res) => {
-    console.log(req.cookies);
-    if(!_.isEmpty(req.cookies) || req.cookies.hasOwnProperty('snapshot_user_account')) {
+    if(Object.prototype.hasOwnProperty.call(req.cookies, "snapshot_user_account")) {
         const googleId = JSON.parse(req.cookies['snapshot_user_account']).google_id;
 
         const exists = await checkIfUserExists(googleId);
