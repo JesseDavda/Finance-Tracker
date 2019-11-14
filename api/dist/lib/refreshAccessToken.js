@@ -86,12 +86,11 @@ function _refreshAccessToken() {
                   while (1) {
                     switch (_context.prev = _context.next) {
                       case 0:
-                        console.log('Token Has Been refreshed!');
                         updateObject = {
                           tl_access_token: response.data.access_token,
                           tl_refresh_token: response.data.refresh_token
                         };
-                        _context.next = 4;
+                        _context.next = 3;
                         return _models.Accounts.findOneAndUpdate({
                           google_id: googleId
                         }, {
@@ -104,10 +103,10 @@ function _refreshAccessToken() {
                           console.log("There was an error updating the data: ", e.response.data);
                         });
 
-                      case 4:
+                      case 3:
                         return _context.abrupt("return", response.data.access_token);
 
-                      case 5:
+                      case 4:
                       case "end":
                         return _context.stop();
                     }
