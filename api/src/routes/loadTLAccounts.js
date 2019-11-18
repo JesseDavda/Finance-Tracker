@@ -74,7 +74,8 @@ router.get('/loadAccounts', async (req, res) => {
 
     try {
         accounts = await callForAccounts(googleId);
-
+        await addAccounts(googleId, accounts);
+        
         if(accounts !== false) res.status(200).json(accounts).end();
         else res.status(500).json({error_message: "The accounts could not be loaded, please try again later"});
     } catch(e) {
