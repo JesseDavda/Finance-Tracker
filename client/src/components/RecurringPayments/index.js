@@ -1,3 +1,3 @@
-import RecurringPayments from './RecurringPayments';
+import RecurringPayments from "./RecurringPayments";
 
 export default RecurringPayments;

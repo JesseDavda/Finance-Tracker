@@ -1,3 +1,3 @@
-import BalanceDisplay from './BalanceDisplay';
+import BalanceDisplay from "./BalanceDisplay";
 
 export default BalanceDisplay;

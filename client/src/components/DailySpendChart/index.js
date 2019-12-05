@@ -1,3 +1,3 @@
-import DailySpendChart from './DailySpendChart';
+import DailySpendChart from "./DailySpendChart";
 
 export default DailySpendChart;

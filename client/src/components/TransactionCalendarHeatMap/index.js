@@ -1,3 +1,3 @@
-import TransactionCalendarHeatMap from './TransactionCalendarHeatMap';
+import TransactionCalendarHeatMap from "./TransactionCalendarHeatMap";
 
 export default TransactionCalendarHeatMap;

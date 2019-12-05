@@ -1,3 +1,3 @@
-import TransactionViewWindow from './TransactionViewWindow';
+import TransactionViewWindow from "./TransactionViewWindow";
 
 export default TransactionViewWindow;
