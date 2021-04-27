@@ -26,7 +26,7 @@
     "mongoose": "^5.7.1",
     "path": "^0.12.7",
     "querystring": "^0.2.0",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "serve-static": "^1.14.1",
     "sha.js": "^2.4.11"
   },
