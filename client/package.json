@@ -7,7 +7,7 @@
     "@fortawesome/pro-light-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.19.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "react": "^16.9.0",
     "react-calendar-heatmap": "^1.8.1",
     "react-cookie": "^4.0.1",
